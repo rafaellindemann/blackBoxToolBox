@@ -1,0 +1,162 @@
+body {
+  margin: 0;
+  background-color: #0a0a0a;
+  color: #f5f5f5;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: orange;
+}
+
+.form-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #111;
+  padding: 1rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 1000;
+  border-bottom: 2px solid #222;
+}
+
+.form-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.form-group input,
+.form-group button {
+  padding: 0.4rem 0.6rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+}
+
+.form-group input {
+  background-color: #222;
+  color: white;
+  width: 90px;
+}
+
+.form-group button {
+  background-color: orange;
+  color: black;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+.form-group button:hover {
+  background-color: darkorange;
+}
+
+.sound-toggle {
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 1.2rem;
+  color: orange;
+  user-select: none;
+}
+
+.sound-toggle input {
+  accent-color: orange;
+}
+
+.timer-list {
+  margin-top: 180px; /* espaço para o header */
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 1rem;
+}
+
+.timer-card {
+  background-color: #111;
+  border: 2px solid #444;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 10px #000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 240px;
+  max-width: 100%;
+  animation: fadeIn 0.4s ease-in;
+}
+
+.timer-label {
+  color: orange;
+  font-weight: bold;
+  font-size: 1.1rem;
+  word-break: break-word;
+}
+
+.timer-time {
+  font-size: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 1px;
+}
+
+.timer-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.timer-controls button {
+  flex: 1;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4rem;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.timer-controls button:hover {
+  transform: scale(1.05);
+}
+
+.timer-controls .delete {
+  background-color: #b00020;
+}
+
+.timer-alert {
+  border-color: orange;
+  animation: pulse 1.2s infinite ease-in-out;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 14px rgba(255, 165, 0, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 165, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
