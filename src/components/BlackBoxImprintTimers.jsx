@@ -50,7 +50,8 @@ const TimerCard = ({ timer, onToggle, onDelete, onEdit }) => {
 
 const BlackBoxImprintTimers = () => {
   const [timers, setTimers] = useState([]);
-  const [form, setForm] = useState({ label: "", hours: 0, minutes: 0, seconds: 0 });
+//   const [form, setForm] = useState({ label: "", hours: 0, minutes: 0, seconds: 0 });
+  const [form, setForm] = useState({ label: "", hours: '', minutes: '', seconds: '' });
   const [editId, setEditId] = useState(null);
   const [soundEnabled, setSoundEnabled] = useState(true);
 
@@ -141,14 +142,14 @@ const BlackBoxImprintTimers = () => {
             placeholder="HH"
             value={form.hours}
             onChange={(e) => setForm({ ...form, hours: e.target.value })}
-          />
+          />:
           <input
             type="number"
             min="0"
             placeholder="MM"
             value={form.minutes}
             onChange={(e) => setForm({ ...form, minutes: e.target.value })}
-          />
+          />:
           <input
             type="number"
             min="0"
