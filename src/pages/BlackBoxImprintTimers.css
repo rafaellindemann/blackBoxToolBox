@@ -1,4 +1,4 @@
-body {
+/* body {
   margin: 0;
   background-color: #0a0a0a;
   color: #f5f5f5;
@@ -9,19 +9,19 @@ h1 {
   margin: 0;
   font-size: 1.5rem;
   color: orange;
-}
+} */
 
 .form-header {
-  position: fixed;
+  /* position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  background-color: #111;
+  z-index: 1000; */
+  background-color: #222;
   padding: 1rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  z-index: 1000;
   border-bottom: 2px solid #222;
 }
 
@@ -135,6 +135,11 @@ h1 {
 .timer-alert {
   border-color: orange;
   animation: pulse 1.2s infinite ease-in-out;
+}
+
+.black-box-imprint-timers{
+  background-color: #333;
+  min-height: 100%;
 }
 
 /* Animations */

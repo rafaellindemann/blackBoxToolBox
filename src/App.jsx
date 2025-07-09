@@ -1,11 +1,13 @@
 import './App.css'
-import BlackBoxImprintTimers from './components/BlackBoxImprintTimers'
+import Navbar from './components/Navbar'
+import { Outlet } from 'react-router-dom'
 
 function App() {
 
   return (
     <>
-      <BlackBoxImprintTimers />
+      <Navbar />
+      <Outlet />
     </>
   )
 }

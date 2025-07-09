@@ -126,7 +126,7 @@ const BlackBoxImprintTimers = () => {
   };
 
   return (
-    <>
+    <main className="black-box-imprint-timers">
       <div className="form-header">
         <h1>Black Box Imprint Timers</h1>
         <div className="form-group">
@@ -180,7 +180,7 @@ const BlackBoxImprintTimers = () => {
           />
         ))}
       </div>
-    </>
+    </main>
   );
 };
 
