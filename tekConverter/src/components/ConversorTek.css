@@ -1,0 +1,98 @@
+/* ConversorTek.css */
+.conversor-container {
+  background-color: #111;
+  color: #f0f0f0;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h2 {
+  color: #ffa533;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+input[type="number"], select {
+  background-color: #222;
+  color: #fff;
+  border: 1px solid #555;
+  padding: 0.4rem;
+  border-radius: 5px;
+  width: 100px;
+  transition: all 0.2s ease-in-out;
+}
+
+input[type="number"]:focus,
+select:focus {
+  border-color: #ffa533;
+  outline: none;
+  box-shadow: 0 0 5px #ffa53388;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  animation: fadeIn 0.6s ease-in;
+}
+
+th, td {
+  padding: 0.6rem;
+  border-bottom: 1px solid #333;
+  text-align: left;
+}
+
+th {
+  background-color: #1a1a1a;
+  color: #ffa533;
+}
+
+tr:hover {
+  background-color: #1f1f1f;
+}
+
+.ferramenta {
+  /* margin-bottom: 3rem; */
+  /* border-left: 4px solid #ffa533; */
+  border: 4px solid rgb(255, 165, 51);
+  /* padding-left: 1rem; */
+  padding: 1rem;
+  animation: slideIn 0.4s ease-in-out;
+  border-radius: 10px;
+  box-shadow: 0 2px 20px rgba(255, 165, 51, 0.2);
+}
+
+.conversor-direto {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.conversor-direto p {
+  margin-left: 1rem;
+  color: #ffa533;
+  font-weight: bold;
+}
+
+.ferramentas-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2rem;
+    width: 100%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
