@@ -134,6 +134,7 @@ const BlackBoxImprintTimers = () => {
             type="text"
             placeholder="Timer name"
             value={form.label}
+            className="input-timer-name"
             onChange={(e) => setForm({ ...form, label: e.target.value })}
           />
           <input
@@ -141,6 +142,7 @@ const BlackBoxImprintTimers = () => {
             min="0"
             placeholder="HH"
             value={form.hours}
+            className="input-timer"
             onChange={(e) => setForm({ ...form, hours: e.target.value })}
           />:
           <input
@@ -148,6 +150,7 @@ const BlackBoxImprintTimers = () => {
             min="0"
             placeholder="MM"
             value={form.minutes}
+            className="input-timer"
             onChange={(e) => setForm({ ...form, minutes: e.target.value })}
           />:
           <input
@@ -155,6 +158,7 @@ const BlackBoxImprintTimers = () => {
             min="0"
             placeholder="SS"
             value={form.seconds}
+            className="input-timer"
             onChange={(e) => setForm({ ...form, seconds: e.target.value })}
           />
           <button onClick={handleAdd}>{editId ? "Save" : "Add"}</button>

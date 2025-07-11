@@ -23,8 +23,11 @@ const itensBase = [
   { nome: "Vacuum Compartments", cotacao: 15 },
   { nome: "Polymer", cotacao: 10000 },
   { nome: "Dust", cotacao: 75000 },
-  { nome: "Element Sheets", cotacao: 100 },
+  { nome: "Element", cotacao: 100 },
+  { nome: "Metal", cotacao: 35000 },
+  { nome: "Shotgun shells", cotacao: 15000 },
 ];
+
 
 export default function ConversorTek() {
   const [tekValue, setTekValue] = useState(100);
@@ -83,12 +86,16 @@ export default function ConversorTek() {
 
       {/* Ferramenta 1 */}
       <section className="ferramenta">
-        <h2>1️⃣ Quantos itens preciso para pagar X Tek?</h2>
-        <input
-          type="number"
-          value={tekValue}
-          onChange={(e) => setTekValue(parseFloat(e.target.value) || 0)}
-        />
+        {/* <h2>1️⃣💲 Quantos itens preciso para pagar X Tek?</h2> */}
+        <h2>💲 Quantos itens preciso para pagar X Tek? 💲</h2>
+        <label htmlFor="">Valor em Tek: 
+          <input
+            className="input-number"
+            type="number"
+            value={tekValue}
+            onChange={(e) => setTekValue(parseFloat(e.target.value) || 0)}
+          />
+        </label>
         <table>
           <thead>
             <tr>
@@ -106,6 +113,7 @@ export default function ConversorTek() {
                   <td>{item.nome}</td>
                   <td>
                     <input
+                      className="input-number"
                       type="number"
                       value={item.cotacao}
                       onChange={(e) => handleCotacaoChange(i, e.target.value)}
@@ -123,11 +131,13 @@ export default function ConversorTek() {
 
       {/* Ferramenta 2 */}
       <section className="ferramenta">
-        <h2>2️⃣ Monte um pagamento com os itens que você tem</h2>
+        {/* <h2>2️⃣ Monte um pagamento com os itens que você tem</h2> */}
+        <h2>🧱📐 Monte um pagamento com os itens que você tem</h2>
         <div style={{ display: 'flex', alignItems: 'center', gap: '2rem', flexWrap: 'wrap' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
             <label>Valor a pagar:</label>
             <input
+              className="input-number"
               type="number"
               value={tekValue}
               onChange={(e) => setTekValue(parseFloat(e.target.value) || 0)}
@@ -151,6 +161,7 @@ export default function ConversorTek() {
                 <td>{item.nome}</td>
                 <td>
                   <input
+                    className="input-number"
                     type="number"
                     value={item.quantidade}
                     onChange={(e) => {
@@ -172,7 +183,8 @@ export default function ConversorTek() {
 
       {/* Ferramenta 3 */}
       <section className="ferramenta">
-        <h2>3️⃣ Conversor direto entre unidades</h2>
+        {/* <h2>3️⃣ Conversor direto entre unidades</h2> */}
+        <h2>💱 Conversor direto entre unidades</h2>
         <div className="conversor-direto">
           <select value={entrada} onChange={(e) => setEntrada(e.target.value)}>
             {cotacoes.map((item) => (
@@ -181,6 +193,7 @@ export default function ConversorTek() {
           </select>
 
           <input
+            className="input-number"
             type="number"
             value={quantidadeConversao}
             onChange={(e) => setQuantidadeConversao(parseFloat(e.target.value) || 0)}
@@ -189,6 +202,7 @@ export default function ConversorTek() {
           <span style={{ fontSize: '1.5rem', color: '#ffa533' }}>⇄</span>
 
           <input
+            className="input-number"
             type="number"
             value={valorConvertido.toFixed(2)}
             onChange={(e) => handleConvertidoEdit(parseFloat(e.target.value) || 0)}

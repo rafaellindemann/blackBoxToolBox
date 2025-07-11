@@ -1,19 +1,20 @@
 /* ConversorTek.css */
 .conversor-container {
   background-color: #111;
+  background-color: #222;
   color: #f0f0f0;
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
 }
 
-h1, h2 {
+/* h1, h2 {
   color: #ffa533;
   margin-bottom: 1rem;
   transition: color 0.3s ease;
   text-align: center;
-}
+} */
 
-input[type="number"], select {
+.input-number, select {
   background-color: #222;
   color: #fff;
   border: 1px solid #555;
@@ -23,7 +24,7 @@ input[type="number"], select {
   transition: all 0.2s ease-in-out;
 }
 
-input[type="number"]:focus,
+.input-number:focus,
 select:focus {
   border-color: #ffa533;
   outline: none;
@@ -62,6 +63,13 @@ tr:hover {
   animation: slideIn 0.4s ease-in-out;
   border-radius: 10px;
   box-shadow: 0 2px 20px rgba(255, 165, 51, 0.2);
+  background-color: #171717;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 .conversor-direto {
@@ -84,6 +92,7 @@ tr:hover {
     align-items: flex-start;
     gap: 2rem;
     width: 100%;
+    /* background-color: #171717; */
 }
 
 /* Animations */
