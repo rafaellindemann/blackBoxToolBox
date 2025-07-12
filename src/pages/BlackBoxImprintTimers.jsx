@@ -14,7 +14,7 @@ const formatTime = (seconds) => {
 const TimerCard = ({ timer, onToggle, onDelete, onEdit }) => {
   useEffect(() => {
     if (timer.timeLeft === 0 && timer.sound) {
-      const sound = new Audio("/baby-cry.mp3");
+      const sound = new Audio("/baby-cry.wav");
       sound.play();
 
       let notifyInterval = setInterval(() => {

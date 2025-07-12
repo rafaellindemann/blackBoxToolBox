@@ -5,8 +5,10 @@ function Navbar() {
     <nav className="navbar">
         <h2>Black Box Toolbox</h2>
         <img src="/box.svg" alt="" />
-        <Link to="/" className="linkNavbar">Conversor Tek</Link>
-        <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link>
+        <div>
+          <Link to="/" className="linkNavbar">Conversor Tek</Link>
+          <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link>
+        </div>
         {/* <img src="/box.svg" alt="" /> */}
     </nav>
   )

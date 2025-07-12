@@ -1,23 +1,29 @@
 /* ConversorTek.css */
+:root {
+  --cor-fundo: #171717;
+  --cor-texto: #f0f0f0;
+  --cor-laranja: #ffa533;
+  --cor-borda: #333;
+  --cor-tabela-header: #1a1a1a;
+  --cor-hover: #1f1f1f;
+  --cor-input: #222;
+  --cor-verde: limegreen;
+  --cor-inativo: #555;
+  --cor-modal-fundo: rgba(0, 0, 0, 0.7);
+  --cor-modal: #222;
+}
+
 .conversor-container {
-  background-color: #111;
-  background-color: #222;
-  color: #f0f0f0;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
 }
 
-/* h1, h2 {
-  color: #ffa533;
-  margin-bottom: 1rem;
-  transition: color 0.3s ease;
-  text-align: center;
-} */
-
 .input-number, select {
-  background-color: #222;
-  color: #fff;
-  border: 1px solid #555;
+  background-color: var(--cor-input);
+  color: var(--cor-texto);
+  border: 1px solid var(--cor-borda);
   padding: 0.4rem;
   border-radius: 5px;
   width: 100px;
@@ -26,9 +32,9 @@
 
 .input-number:focus,
 select:focus {
-  border-color: #ffa533;
+  border-color: var(--cor-laranja);
   outline: none;
-  box-shadow: 0 0 5px #ffa53388;
+  box-shadow: 0 0 5px var(--cor-laranja);
 }
 
 table {
@@ -41,30 +47,26 @@ table {
 
 th, td {
   padding: 0.6rem;
-  border-bottom: 1px solid #333;
+  border-bottom: 1px solid var(--cor-borda);
   text-align: left;
 }
 
 th {
-  background-color: #1a1a1a;
-  color: #ffa533;
+  background-color: var(--cor-tabela-header);
+  color: var(--cor-laranja);
 }
 
 tr:hover {
-  background-color: #1f1f1f;
+  background-color: var(--cor-hover);
 }
 
 .ferramenta {
-  /* margin-bottom: 3rem; */
-  /* border-left: 4px solid #ffa533; */
-  border: 4px solid rgb(255, 165, 51);
-  /* padding-left: 1rem; */
+  border: 4px solid var(--cor-laranja);
   padding: 1rem;
   animation: slideIn 0.4s ease-in-out;
   border-radius: 10px;
   box-shadow: 0 2px 20px rgba(255, 165, 51, 0.2);
-  background-color: #171717;
-
+  background-color: var(--cor-fundo);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -77,22 +79,136 @@ tr:hover {
   gap: 0.5rem;
   align-items: center;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .conversor-direto p {
   margin-left: 1rem;
-  color: #ffa533;
+  color: var(--cor-laranja);
   font-weight: bold;
 }
 
-.ferramentas-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 2rem;
+.ferramentas-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 2rem;
+  width: 100%;
+}
+
+.btn-config {
+  margin-left: 1rem;
+  background: none;
+  border: none;
+  color: var(--cor-laranja);
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.btn-config:hover {
+  transform: scale(1.2);
+}
+
+.modal-config {
+  position: fixed;
+  inset: 0;
+  background: var(--cor-modal-fundo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background: var(--cor-modal);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  max-width: 600px;
+}
+
+.item-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.item-grid button {
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.item-grid .ativo {
+  background-color: var(--cor-laranja);
+  color: black;
+}
+
+.item-grid .inativo {
+  background-color: var(--cor-inativo);
+  color: #ccc;
+  text-decoration: line-through;
+}
+
+.btn-fechar {
+  margin-top: 1rem;
+  background-color: var(--cor-laranja);
+  color: black;
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-fechar:hover {
+  background-color: #e6952f;
+}
+
+
+
+@media (max-width: 600px) {
+  .navbar {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .ferramentas-container {
+    flex-direction: column;
+  }
+
+  .input-number, select {
     width: 100%;
-    /* background-color: #171717; */
+    max-width: 200px;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  .btn-config {
+    font-size: 1.5rem;
+  }
+
+  .conversor-direto{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
 }
 
 /* Animations */
