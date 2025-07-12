@@ -24,7 +24,7 @@ const TimerCard = ({ timer, onToggle, onDelete, onEdit }) => {
 
       return () => {
         clearInterval(notifyInterval);
-        document.title = "Black Box Imprint Timers";
+        // document.title = "Black Box Imprint Timers";
       };
     }
   }, [timer.timeLeft, timer.sound]);
