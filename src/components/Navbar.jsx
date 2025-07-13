@@ -7,7 +7,7 @@ function Navbar() {
         <img src="/box.svg" alt="" />
         <div>
           <Link to="/" className="linkNavbar">Conversor Tek</Link>
-          <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link>
+          {/* <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link> */}
         </div>
         {/* <img src="/box.svg" alt="" /> */}
     </nav>
