@@ -1,3 +1,17 @@
+:root {
+  --cor-fundo: #171717;
+  --cor-texto: #f0f0f0;
+  --cor-laranja: #ffa533;
+  --cor-borda: #333;
+  --cor-tabela-header: #1a1a1a;
+  --cor-hover: #1f1f1f;
+  --cor-input: #222;
+  --cor-verde: limegreen;
+  --cor-inativo: #555;
+  --cor-modal-fundo: rgba(0, 0, 0, 0.7);
+  --cor-modal: #222;
+}
+
 *{
   box-sizing: border-box;
   margin: 0;
@@ -17,3 +31,4 @@ h1, h2 {
   transition: color 0.3s ease;
   text-align: center;
 }
+

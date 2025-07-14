@@ -1,13 +1,13 @@
+
+
 /* Tema escuro base */
 .dark-theme {
-  background-color: #1e1e1e;
-  color: #f0f0f0;
-  font-family: sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
   padding: 20px;
   min-height: 100vh;
 }
 
-/* Layout de colunas */
 .columns {
   display: flex;
   gap: 10px;
@@ -18,44 +18,44 @@
 .column {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  min-width: 100px;
+  gap: 8px;
+  min-width: 120px;
 }
 
-/* input[type="text"],
-input[type="number"] {
-  padding: 4px 6px;
-  background: #2a2a2a;
-  color: white;
-  border: 1px solid #555;
-  border-radius: 4px;
-} */
+.input-text,
+.input-number {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--cor-borda);
+  background-color: var(--cor-input);
+  color: var(--cor-texto);
+  font-size: 1rem;
+}
 
 input[type="radio"] {
-  margin-right: 4px;
+  margin-right: 6px;
 }
 
-/* Botões */
 button {
   margin-right: 10px;
   padding: 8px 16px;
-  background-color: #ff7a00;
-  color: white;
+  background-color: var(--cor-laranja);
+  color: var(--cor-fundo);
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background 0.2s;
+  font-weight: bold;
+  transition: background 0.2s ease;
 }
 
 button:hover {
-  background-color: #ffa03a;
+  background-color: #ffb765;
 }
 
-/* Nome gerado com animação */
 .generated-name {
   margin-top: 20px;
   font-size: 1.8em;
-  color: #ffa03a;
+  color: var(--cor-laranja);
   font-weight: bold;
   cursor: pointer;
   opacity: 0;
@@ -68,14 +68,13 @@ button:hover {
   transform: scale(1);
 }
 
-/* Modal */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(20, 20, 20, 0.85);
+  background: var(--cor-modal-fundo);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -83,20 +82,46 @@ button:hover {
 }
 
 .modal-content {
-  background-color: #2e2e2e;
+  background-color: var(--cor-modal);
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 10px;
   animation: slideDown 0.3s ease-out;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 14px;
+  min-width: 300px;
 }
 
 .modal-content input {
   width: 100%;
 }
 
-/* Animações */
+.species-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--cor-hover);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.species-item .icons button {
+  margin-left: 5px;
+  padding: 4px 8px;
+  font-size: 1rem;
+  border-radius: 4px;
+}
+
+.species-item .icons .delete {
+  background: crimson;
+  color: white;
+}
+
+.species-item .icons .edit {
+  background: var(--cor-laranja);
+  color: black;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
