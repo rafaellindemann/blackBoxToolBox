@@ -6,6 +6,10 @@
   color: var(--cor-texto);
   padding: 2rem;
   font-family: 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-number, select {
@@ -18,6 +22,11 @@
   transition: all 0.2s ease-in-out;
 }
 
+.select-unidade{
+  width: 200px;
+
+}
+
 .input-number:focus,
 select:focus {
   border-color: var(--cor-laranja);
@@ -26,7 +35,7 @@ select:focus {
 }
 
 table {
-  width: 100%;
+  /* width: 100%; */
   border-collapse: collapse;
   margin-top: 1rem;
   margin-bottom: 2rem;
