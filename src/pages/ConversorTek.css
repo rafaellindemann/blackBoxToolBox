@@ -20,6 +20,7 @@
   border-radius: 5px;
   width: 100px;
   transition: all 0.2s ease-in-out;
+  text-align: center;
 }
 
 .select-unidade{
