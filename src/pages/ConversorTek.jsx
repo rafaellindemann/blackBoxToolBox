@@ -27,9 +27,9 @@ export default function ConversorTek() {
     <div className="conversor-container">
       <h1>
         Conversor de Tek
-        <button className="btn-config" onClick={() => alert("Configuração movida para outro lugar.")}>
+        {/* <button className="btn-config" onClick={() => alert("Configuração movida para outro lugar.")}>
           <FaCog />
-        </button>
+        </button> */}
       </h1>
 
       <section className="ferramenta">
