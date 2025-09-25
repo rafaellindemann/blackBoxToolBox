@@ -125,7 +125,7 @@ export default function DecayTimers() {
       </section>
 
       {bases.length > 0 && (
-        <div>
+        <section className="ferramenta">
           <h2>Bases Cadastradas</h2>
           <table>
             <thead>
@@ -156,7 +156,7 @@ export default function DecayTimers() {
               })}
             </tbody>
           </table>
-        </div>
+        </section>
       )}
 
       {modalIndex !== null && (
