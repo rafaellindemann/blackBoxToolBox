@@ -5,6 +5,7 @@ import PagadorTek from "../pages/PagadorTek";
 import TradutorTek from "../pages/TradutorTek";
 import BlackBoxImprintTimers from "../pages/BlackBoxImprintTimers";
 import DinoNameGenerator from "../pages/DinoNameGenerator";
+import DecayTimers from "../pages/DecayTimers";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
       { path: "/tradutor", element: <TradutorTek /> },
       { path: "/imprinttimers", element: <BlackBoxImprintTimers /> },
       { path: "/dinonamegenerator", element: <DinoNameGenerator /> },
+      { path: "/decaytimers", element: <DecayTimers /> },
     ],
   },
 ]);
