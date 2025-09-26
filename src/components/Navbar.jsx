@@ -19,7 +19,7 @@ function Navbar() {
     <nav className="navbar">
         <h2>Black Box Toolbox</h2>
         <img src="/box.svg" alt="" />
-        <div>
+        <div className="links-container">
           <Link to="/" className="linkNavbar">Conversor Tek</Link>
           <Link to="/pagador" className="linkNavbar">Pagador Tek</Link>
           <Link to="/tradutor" className="linkNavbar">Tradutor Tek</Link>

@@ -50,3 +50,11 @@
   transition: ease-in-out 0.1s;
   text-decoration: underline;
 }
+
+.links-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
