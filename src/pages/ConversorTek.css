@@ -139,6 +139,14 @@ tr:hover {
   max-height: 300px;
   overflow-y: auto;
 }
+.flex-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  
+  overflow-y: auto;
+}
 
 .item-grid button {
   padding: 0.3rem 0.7rem;

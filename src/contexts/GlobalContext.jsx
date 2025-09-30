@@ -31,6 +31,69 @@ const itensBase = [
   { nome: "Shotgun shells", cotacao: 15000 },
 ];
 
+const seedDinos = [
+  {
+    nome: "Argentavis",
+    level: 280,
+    macho: 2,
+    femea: 1,
+    descricao: "Alta estamina e capacidade de carga",
+    credito: "Lambari",
+    notas: "Ideal para transporte",
+    imagem: "https://static.wikia.nocookie.net/arksurvivalevolved_gamepedia/images/7/7d/Argentavis_PaintRegion0.png",
+    tag: "reprodutor",
+    apenasBebe: false,
+  },
+  {
+    nome: "Shadowmane",
+    level: 290,
+    macho: 1,
+    femea: 2,
+    descricao: "Rápido, dano alto e stun",
+    credito: "Alejandra",
+    notas: "Bom para boss",
+    imagem: "https://static.wikia.nocookie.net/arksurvivalevolved_gamepedia/images/f/f7/Shadowmane.png",
+    tag: "clone",
+    apenasBebe: false,
+  },
+  {
+    nome: "Reaper King",
+    level: 300,
+    macho: 1,
+    femea: 0,
+    descricao: "Tanque extremo, regen alta",
+    credito: "Gabriel F.",
+    notas: "Difícil de obter",
+    imagem: "https://static.wikia.nocookie.net/arksurvivalevolved_gamepedia/images/5/5f/Reaper_King.png",
+    tag: "evento",
+    apenasBebe: true,
+  },
+  {
+    nome: "Giganotossauro",
+    level: 350,
+    macho: 2,
+    femea: 3,
+    descricao: "Dano massivo e presença em PvP",
+    credito: "Maria Wolf",
+    notas: "Linhas mutadas",
+    imagem: "https://static.wikia.nocookie.net/arksurvivalevolved_gamepedia/images/6/61/Giganotosaurus.png",
+    tag: "reprodutor",
+    apenasBebe: false,
+  },
+  {
+    nome: "Managarmr",
+    level: 260,
+    macho: 1,
+    femea: 1,
+    descricao: "Mobilidade e DPS em movimento",
+    credito: "Estevão Trampos",
+    notas: "Excelente para drop hunting",
+    imagem: "https://static.wikia.nocookie.net/arksurvivalevolved_gamepedia/images/e/e3/Managarmr.png",
+    tag: "scout",
+    apenasBebe: true,
+  },
+];
+
 export const GlobalContextProvider = ({ children }) => {
   const [usuarioLogado, setUsuarioLogado] = useState("Gill Bates");
   const idadeUsuario = "55";
@@ -46,6 +109,8 @@ export const GlobalContextProvider = ({ children }) => {
   const [visiveis, setVisiveis] = useState(
     itensBase.reduce((acc, item) => ({ ...acc, [item.nome]: true }), {})
   );
+
+  const [estoqueDinos, setEstoqueDinos] = useState(seedDinos);
 
   useEffect(() => {
     const salvo = JSON.parse(localStorage.getItem(STORAGE_KEY));
@@ -107,32 +172,12 @@ export const GlobalContextProvider = ({ children }) => {
         setVisiveis,
         toggleVisibilidade,
         resetarTudo,
-        itensBase
+        itensBase,
+        estoqueDinos,
+        setEstoqueDinos,
       }}
     >
       {children}
     </GlobalContext.Provider>
   );
 };
-
-
-
-// import { createContext, useState } from "react";
-
-// export const GlobalContext = createContext()
-
-// export const GlobalContextProvider = ({children}) => {
-// // let usuarioLogado = 'Gill Bates'
-// const [usuarioLogado, setUsuarioLogado] = useState('Gill Bates')
-// let idadeUsuario = '55'
-
-//     return(
-//         <GlobalContext.Provider value={{
-//             usuarioLogado,
-//             setUsuarioLogado,
-//             idadeUsuario
-//             }}>
-//             {children}
-//         </GlobalContext.Provider>
-//     )
-// }
