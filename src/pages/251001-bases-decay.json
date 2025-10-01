@@ -1,0 +1,74 @@
+[
+  {
+    "id": "26910e12-fe3b-4671-8376-08ae0803e5c7",
+    "nome": "5638 - fob vacuum",
+    "material": "Tek",
+    "ultimaVisita": "2025-09-29T04:31:42.921Z"
+  },
+  {
+    "id": 1,
+    "nome": "5951 main",
+    "material": "Metal",
+    "ultimaVisita": "2025-09-29T05:21:11.674Z"
+  },
+  {
+    "id": 2,
+    "nome": "5951 lemn ss baldeação",
+    "material": "Tek",
+    "ultimaVisita": "2025-10-01T12:09:25.875Z"
+  },
+  {
+    "id": 3,
+    "nome": "5951 fob vacuum 76 10",
+    "material": "Tek",
+    "ultimaVisita": "2025-10-01T12:10:47.468Z"
+  },
+  {
+    "id": 4,
+    "nome": "5951 pok n sw",
+    "material": "Stone",
+    "ultimaVisita": "2025-10-01T12:12:08.107Z"
+  },
+  {
+    "id": 5,
+    "nome": "5998 castores",
+    "material": "Metal",
+    "ultimaVisita": "2025-10-01T12:14:02.201Z"
+  },
+  {
+    "id": 6,
+    "nome": "5998 mineral",
+    "material": "Tek",
+    "ultimaVisita": "2025-10-01T12:16:31.249Z"
+  },
+  {
+    "id": 7,
+    "nome": "5998 MAIN",
+    "material": "Stone",
+    "ultimaVisita": "2025-10-01T12:18:46.136Z"
+  },
+  {
+    "id": 8,
+    "nome": "5847 cidade",
+    "material": "Metal",
+    "ultimaVisita": "2025-10-01T12:39:33.556Z"
+  },
+  {
+    "id": 9,
+    "nome": "6097 ilha do sul",
+    "material": "Metal",
+    "ultimaVisita": "2025-10-01T12:41:26.639Z"
+  },
+  {
+    "id": 10,
+    "nome": "6097 canyon (obra pedra)",
+    "material": "Stone",
+    "ultimaVisita": "2025-10-01T12:42:49.206Z"
+  },
+  {
+    "id": 11,
+    "nome": "5175 fob cristal vacuum",
+    "material": "Tek",
+    "ultimaVisita": "2025-10-01T12:45:16.840Z"
+  }
+]

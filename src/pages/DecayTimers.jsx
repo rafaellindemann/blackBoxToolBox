@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./ConversorTek.css";
+import { v4 as uuidv4 } from "uuid";
 
 const DECAY_TIMES = {
   Thatch: 4,
@@ -17,7 +18,7 @@ export default function DecayTimers() {
   const [bases, setBases] = useState([]);
   const [nome, setNome] = useState("");
   const [material, setMaterial] = useState("Thatch");
-  const [modalIndex, setModalIndex] = useState(null);
+  const [modalId, setModalId] = useState(null);
   const [editNome, setEditNome] = useState("");
   const [editMaterial, setEditMaterial] = useState("Thatch");
 
@@ -32,9 +33,14 @@ export default function DecayTimers() {
 
   const addBase = () => {
     if (!nome) return;
+    if (bases.some((b) => b.nome.toLowerCase() === nome.toLowerCase())) {
+      alert("Já existe uma base com esse nome.");
+      return;
+    }
     setBases([
       ...bases,
       {
+        id: uuidv4(),
         nome,
         material,
         ultimaVisita: new Date(),
@@ -44,31 +50,66 @@ export default function DecayTimers() {
     setMaterial("Thatch");
   };
 
-  const resetarBase = (index) => {
-    const novaLista = [...bases];
-    novaLista[index].ultimaVisita = new Date();
+  const resetarBase = (id) => {
+    const novaLista = bases.map((base) =>
+      base.id === id ? { ...base, ultimaVisita: new Date() } : base
+    );
     setBases(novaLista);
   };
 
-  const abrirEdicao = (index) => {
-    setEditNome(bases[index].nome);
-    setEditMaterial(bases[index].material);
-    setModalIndex(index);
+  const abrirEdicao = (id) => {
+    const base = bases.find((b) => b.id === id);
+    if (base) {
+      setEditNome(base.nome);
+      setEditMaterial(base.material);
+      setModalId(id);
+    }
   };
 
   const salvarEdicao = () => {
-    const novaLista = [...bases];
-    novaLista[modalIndex].nome = editNome;
-    novaLista[modalIndex].material = editMaterial;
+    if (bases.some((b) => b.nome.toLowerCase() === editNome.toLowerCase() && b.id !== modalId)) {
+      alert("Já existe uma base com esse nome.");
+      return;
+    }
+    const novaLista = bases.map((base) =>
+      base.id === modalId ? { ...base, nome: editNome, material: editMaterial } : base
+    );
     setBases(novaLista);
-    setModalIndex(null);
+    setModalId(null);
   };
 
-  const excluirBase = (index) => {
+  const excluirBase = (id) => {
     if (confirm("Tem certeza que deseja excluir esta base?")) {
-      const novaLista = bases.filter((_, i) => i !== index);
+      const novaLista = bases.filter((base) => base.id !== id);
       setBases(novaLista);
     }
+  };
+
+  const exportar = () => {
+    const blob = new Blob([JSON.stringify(bases, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "bases-decay.json";
+    link.click();
+  };
+
+  const importar = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const json = JSON.parse(e.target.result);
+        if (Array.isArray(json)) {
+          const corrigido = json.map((b) => ({ ...b, id: b.id || uuidv4() }));
+          setBases(corrigido);
+        }
+      } catch {
+        alert("Erro ao importar JSON");
+      }
+    };
+    reader.readAsText(file);
   };
 
   const calcularTempoRestanteMs = (base) => {
@@ -119,8 +160,12 @@ export default function DecayTimers() {
               style={{ flexGrow: 1, minWidth: "200px" }}
             />
             <button onClick={addBase}>Adicionar</button>
+            <button onClick={exportar}>Exportar JSON</button>
+            <label className="btn-config">
+              Importar JSON
+              <input type="file" onChange={importar} style={{ display: "none" }} />
+            </label>
           </div>
-
         </div>
       </section>
 
@@ -138,18 +183,18 @@ export default function DecayTimers() {
               </tr>
             </thead>
             <tbody>
-              {basesOrdenadas.map((base, i) => {
+              {basesOrdenadas.map((base) => {
                 const tempo = calcularTempoRestante(base);
                 return (
-                  <tr key={i}>
+                  <tr key={base.id}>
                     <td style={{ textAlign: "center" }}>{base.nome}</td>
                     <td style={{ textAlign: "center" }}>{base.material}</td>
                     <td style={{ textAlign: "center" }}>{new Date(base.ultimaVisita).toLocaleString()}</td>
                     <td style={{ textAlign: "center", color: tempo.cor }}>{tempo.texto}</td>
                     <td style={{ textAlign: "center" }}>
-                      <button onClick={() => resetarBase(i)}>🏠 Visitei</button>{" "}
-                      <button onClick={() => abrirEdicao(i)}>✏️</button>{" "}
-                      <button onClick={() => excluirBase(i)}>🗑️</button>
+                      <button onClick={() => resetarBase(base.id)}>🏠 Visitei</button>{" "}
+                      <button onClick={() => abrirEdicao(base.id)}>✏️</button>{" "}
+                      <button onClick={() => excluirBase(base.id)}>🗑️</button>
                     </td>
                   </tr>
                 );
@@ -159,7 +204,7 @@ export default function DecayTimers() {
         </section>
       )}
 
-      {modalIndex !== null && (
+      {modalId !== null && (
         <div className="modal-config">
           <div className="modal-content">
             <h2>Editar Base</h2>
@@ -185,7 +230,7 @@ export default function DecayTimers() {
             </div>
             <div style={{ display: "flex", gap: "1rem" }}>
               <button onClick={salvarEdicao}>Salvar</button>
-              <button onClick={() => setModalIndex(null)}>Cancelar</button>
+              <button onClick={() => setModalId(null)}>Cancelar</button>
             </div>
           </div>
         </div>
@@ -193,4 +238,3 @@ export default function DecayTimers() {
     </div>
   );
 }
-
