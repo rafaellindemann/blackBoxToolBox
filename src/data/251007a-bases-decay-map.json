@@ -1,0 +1,96 @@
+{
+  "exportedAt": "2025-10-07T21:28:57.006Z",
+  "bases": [
+    {
+      "id": "26910e12-fe3b-4671-8376-08ae0803e5c7",
+      "map": 5638,
+      "nome": "fob vacuum",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-02T00:34:00.928Z"
+    },
+    {
+      "id": 1,
+      "map": 5951,
+      "nome": "main",
+      "material": "Metal",
+      "ultimaVisita": "2025-10-06T13:31:42.204Z"
+    },
+    {
+      "id": 2,
+      "map": 5951,
+      "nome": "lemn ss baldeação",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-06T12:55:19.350Z"
+    },
+    {
+      "id": 3,
+      "map": 5951,
+      "nome": "fob vacuum 76 10",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-06T12:53:13.364Z"
+    },
+    {
+      "id": 4,
+      "map": 5951,
+      "nome": "pok n sw",
+      "material": "Stone",
+      "ultimaVisita": "2025-10-06T12:55:09.156Z"
+    },
+    {
+      "id": 5,
+      "map": 5998,
+      "nome": "castores",
+      "material": "Metal",
+      "ultimaVisita": "2025-10-06T13:25:38.200Z"
+    },
+    {
+      "id": 6,
+      "map": 5998,
+      "nome": "mineral",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-06T13:04:02.543Z"
+    },
+    {
+      "id": 7,
+      "map": 5998,
+      "nome": "MAIN",
+      "material": "Stone",
+      "ultimaVisita": "2025-10-06T13:28:45.712Z"
+    },
+    {
+      "id": 8,
+      "map": 5847,
+      "nome": "cidade",
+      "material": "Metal",
+      "ultimaVisita": "2025-10-06T13:30:30.026Z"
+    },
+    {
+      "id": 9,
+      "map": 6097,
+      "nome": "ilha do sul",
+      "material": "Metal",
+      "ultimaVisita": "2025-10-06T13:00:57.184Z"
+    },
+    {
+      "id": 10,
+      "map": 6097,
+      "nome": "canyon (obra pedra)",
+      "material": "Stone",
+      "ultimaVisita": "2025-10-06T13:01:01.118Z"
+    },
+    {
+      "id": 11,
+      "map": 5175,
+      "nome": "fob cristal vacuum",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-06T13:32:37.852Z"
+    },
+    {
+      "id": "813df113-a3d3-4fb4-9f47-6e5297f90d1f",
+      "map": 5951,
+      "nome": "mineral",
+      "material": "Tek",
+      "ultimaVisita": "2025-10-06T12:54:08.769Z"
+    }
+  ]
+}

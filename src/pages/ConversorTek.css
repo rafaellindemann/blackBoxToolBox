@@ -214,3 +214,12 @@ tr:hover {
   from { opacity: 0; transform: translateX(-10px); }
   to { opacity: 1; transform: translateX(0); }
 }
+
+
+.pulsar {
+  animation: pulsar 1s ease-in-out infinite alternate;
+}
+@keyframes pulsar {
+  from { transform: scale(1); opacity: 1; }
+  to { transform: scale(1.1); opacity: 0.8; }
+}
