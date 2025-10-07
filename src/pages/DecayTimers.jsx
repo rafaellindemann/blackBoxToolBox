@@ -19,11 +19,11 @@ const LAST_IMPORT_KEY = "decayBases_lastImport";
 export default function DecayTimers() {
   const [bases, setBases] = useState([]);
   const [nome, setNome] = useState("");
-  const [material, setMaterial] = useState("Thatch");
+  const [material, setMaterial] = useState("Metal");
   const [mapa, setMapa] = useState("");
   const [modalId, setModalId] = useState(null);
   const [editNome, setEditNome] = useState("");
-  const [editMaterial, setEditMaterial] = useState("Thatch");
+  const [editMaterial, setEditMaterial] = useState("Metal");
   const [editMapa, setEditMapa] = useState("");
   const [filtros, setFiltros] = useState({});
   const [ultimaImportacao, setUltimaImportacao] = useState(null);
@@ -60,7 +60,7 @@ export default function DecayTimers() {
     setBases(novaLista);
     setNome("");
     setMapa("");
-    setMaterial("Thatch");
+    setMaterial("Metal");
   };
 
   const exportar = () => {
@@ -215,7 +215,7 @@ export default function DecayTimers() {
       <h1>⏳ Timer de Decay</h1>
 
       {/* Formulário */}
-      <section className="ferramenta" style={{ width: "90%" }}>
+      <section className="ferramenta" >
         <h2>Adicionar Base</h2>
         <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
           <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
@@ -253,7 +253,7 @@ export default function DecayTimers() {
       </section>
 
       {/* Import / Export + Filtros */}
-      <section className="ferramenta" style={{ display: "flex", gap: "2rem", flexWrap: "wrap", width: "90%" }}>
+      <section className="ferramenta" style={{ display: "flex", gap: "2rem", flexWrap: "wrap"}}>
         <div>
           <h2>Importar / Exportar</h2>
           <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
