@@ -239,6 +239,94 @@ export default function StatusMix() {
     setForm((prev) => ({ ...prev, especie: novas[0] || "" }));
   };
 
+  const exportarJsonClipboard = async () => {
+    const dados = {
+      versao: 1,
+      exportedAt: new Date().toISOString(),
+      especies,
+      dinos,
+      especieFiltro,
+    };
+
+    try {
+      await navigator.clipboard.writeText(JSON.stringify(dados, null, 2));
+      alert("JSON do Status Mix copiado para a área de transferência!");
+    } catch {
+      alert("Não foi possível acessar a área de transferência. Verifique a permissão do navegador.");
+    }
+  };
+
+  const importarJsonClipboard = async () => {
+    try {
+      const texto = await navigator.clipboard.readText();
+      const dados = JSON.parse(texto);
+
+      if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) {
+        throw new Error("Formato inválido");
+      }
+
+      const especiesImportadas = dados.especies
+        .filter((especie) => typeof especie === "string" && especie.trim())
+        .map((especie) => especie.trim());
+
+      const dinosImportados = dados.dinos.map((dino) => {
+        if (
+          !dino ||
+          typeof dino !== "object" ||
+          typeof dino.especie !== "string" ||
+          typeof dino.nome !== "string"
+        ) {
+          throw new Error("Dino inválido");
+        }
+
+        const stats = STATUS.reduce((acc, { key }) => {
+          const valor = normalizarNumero(dino[key]);
+          if (valor === null) throw new Error(`Status inválido: ${key}`);
+          acc[key] = valor;
+          return acc;
+        }, {});
+
+        return {
+          ...dino,
+          id: dino.id || uuidv4(),
+          especie: dino.especie.trim(),
+          nome: dino.nome.trim(),
+          genero: dino.genero === "Fêmea" ? "Fêmea" : "Macho",
+          ...stats,
+          nivel: calcularNivel(stats),
+        };
+      });
+
+      const especiesDosDinos = dinosImportados.map((dino) => dino.especie);
+      const especiesFinais = [...new Set([...especiesImportadas, ...especiesDosDinos])]
+        .sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+      const filtroImportado =
+        typeof dados.especieFiltro === "string" &&
+        especiesFinais.includes(dados.especieFiltro)
+          ? dados.especieFiltro
+          : especiesFinais[0] || "";
+
+      if (
+        !confirm(
+          `Importar ${dinosImportados.length} dino(s) e ${especiesFinais.length} espécie(s)? Isso substituirá os dados atuais do Status Mix.`
+        )
+      ) {
+        return;
+      }
+
+      setEspecies(especiesFinais);
+      setDinos(dinosImportados);
+      setEspecieFiltro(filtroImportado);
+      setForm({ ...FORM_VAZIO, especie: filtroImportado });
+      setEditandoId(null);
+
+      alert("Dados importados com sucesso!");
+    } catch {
+      alert("Não foi possível importar. A área de transferência não contém um JSON válido do Status Mix.");
+    }
+  };
+
   const moverDino = (id, direcao) => {
     setDinos((prev) => {
       const indicesDaEspecie = prev
@@ -402,6 +490,33 @@ export default function StatusMix() {
               disabled={!especieFiltro}
             >
               🗑️
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <section className="statusmix-card transferencia-card">
+        <div className="section-title-row">
+          <div>
+            <h2>Importar / Exportar</h2>
+            <p>Copie toda a coleção como JSON ou restaure dados copiados anteriormente.</p>
+          </div>
+          <div className="clipboard-actions">
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={exportarJsonClipboard}
+              title="Copiar JSON para a área de transferência"
+            >
+              📋 Exportar JSON
+            </button>
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={importarJsonClipboard}
+              title="Importar JSON da área de transferência"
+            >
+              📥 Importar JSON
             </button>
           </div>
         </div>
