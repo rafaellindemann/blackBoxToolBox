@@ -119,6 +119,7 @@
   padding: 0.65rem 0.9rem;
   cursor: pointer;
   transition: transform 0.12s ease, border-color 0.2s ease, background 0.2s ease;
+  color: var(--cor-texto);
 }
 
 .statusmix-container button:hover,
