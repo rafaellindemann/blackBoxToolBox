@@ -25,6 +25,7 @@ function Navbar() {
           <Link to="/tradutor" className="linkNavbar">Tradutor Tek</Link>
           <Link to="/decaytimers" className="linkNavbar">Decay Timers</Link>
           <Link to="/estoque" className="linkNavbar">Estoque</Link>
+          <Link to="/statusmix" className="linkNavbar">Status Mix</Link>
           {/* <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link> */}
          <button onClick={() => setModalAberto(true)} className="btn-config">
            <FaCog />

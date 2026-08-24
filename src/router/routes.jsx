@@ -7,6 +7,7 @@ import BlackBoxImprintTimers from "../pages/BlackBoxImprintTimers";
 import DinoNameGenerator from "../pages/DinoNameGenerator";
 import DecayTimers from "../pages/DecayTimers";
 import EstoqueDinos from "../pages/EstoqueDinos";
+import StatusMix from "../pages/StatusMix";
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
       { path: "/dinonamegenerator", element: <DinoNameGenerator /> },
       { path: "/decaytimers", element: <DecayTimers /> },
       { path: "/estoque", element: <EstoqueDinos /> },
+      { path: "/statusmix", element: <StatusMix /> },
     ],
   },
 ]);
