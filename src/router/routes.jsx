@@ -14,14 +14,14 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
-      { path: "/", element: <ConversorTek /> },
+      { path: "/", element: <StatusMix /> },
+      { path: "/conversor", element: <ConversorTek /> },
       { path: "/pagador", element: <PagadorTek /> },
       { path: "/tradutor", element: <TradutorTek /> },
       { path: "/imprinttimers", element: <BlackBoxImprintTimers /> },
       { path: "/dinonamegenerator", element: <DinoNameGenerator /> },
       { path: "/decaytimers", element: <DecayTimers /> },
       { path: "/estoque", element: <EstoqueDinos /> },
-      { path: "/statusmix", element: <StatusMix /> },
     ],
   },
 ]);

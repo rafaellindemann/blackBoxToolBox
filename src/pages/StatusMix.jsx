@@ -51,6 +51,10 @@ export default function StatusMix() {
   const [modalEspecie, setModalEspecie] = useState(false);
   const [novaEspecie, setNovaEspecie] = useState("");
   const [editandoId, setEditandoId] = useState(null);
+  const [versaoSave, setVersaoSave] = useState(0);
+  const [dataSaveCarregado, setDataSaveCarregado] = useState(null);
+  const [dataUltimaAlteracao, setDataUltimaAlteracao] = useState(null);
+  const [carregamentoInicialConcluido, setCarregamentoInicialConcluido] = useState(false);
 
   useEffect(() => {
     try {
@@ -62,21 +66,43 @@ export default function StatusMix() {
 
       setEspecies(especiesSalvas);
       setDinos(dinosSalvos);
+      setVersaoSave(Number.isInteger(salvo.versaoSave) ? salvo.versaoSave : 0);
+      setDataSaveCarregado(salvo.dataSaveCarregado || null);
+      setDataUltimaAlteracao(salvo.dataUltimaAlteracao || null);
 
       const primeira = salvo.especieFiltro || especiesSalvas[0] || "";
       setEspecieFiltro(primeira);
       setForm((prev) => ({ ...prev, especie: especiesSalvas[0] || "" }));
     } catch {
       console.warn("Não foi possível carregar os dados do Status Mix.");
+    } finally {
+      setCarregamentoInicialConcluido(true);
     }
   }, []);
 
   useEffect(() => {
+    if (!carregamentoInicialConcluido) return;
+
     localStorage.setItem(
       STORAGE_KEY,
-      JSON.stringify({ especies, dinos, especieFiltro })
+      JSON.stringify({
+        especies,
+        dinos,
+        especieFiltro,
+        versaoSave,
+        dataSaveCarregado,
+        dataUltimaAlteracao,
+      })
     );
-  }, [especies, dinos, especieFiltro]);
+  }, [
+    especies,
+    dinos,
+    especieFiltro,
+    versaoSave,
+    dataSaveCarregado,
+    dataUltimaAlteracao,
+    carregamentoInicialConcluido,
+  ]);
 
   useEffect(() => {
     if (!form.especie && especies.length > 0) {
@@ -137,6 +163,16 @@ export default function StatusMix() {
     setForm((prev) => ({ ...prev, [campo]: valor }));
   };
 
+  const marcarAlteracao = () => {
+    setDataUltimaAlteracao(new Date().toISOString());
+  };
+
+  const formatarData = (data) => {
+    if (!data) return "—";
+    const parsed = new Date(data);
+    return Number.isNaN(parsed.getTime()) ? "—" : parsed.toLocaleString("pt-BR");
+  };
+
   const limparForm = (especie = form.especie) => {
     setForm({ ...FORM_VAZIO, especie });
     setEditandoId(null);
@@ -177,6 +213,7 @@ export default function StatusMix() {
       setDinos((prev) => [...prev, { id: uuidv4(), ...dados }]);
     }
 
+    marcarAlteracao();
     setEspecieFiltro(form.especie);
     limparForm(form.especie);
   };
@@ -195,6 +232,7 @@ export default function StatusMix() {
   const excluirDino = (id) => {
     if (!confirm("Excluir este dino do Status Mix?")) return;
     setDinos((prev) => prev.filter((dino) => dino.id !== id));
+    marcarAlteracao();
     if (editandoId === id) limparForm();
   };
 
@@ -216,6 +254,7 @@ export default function StatusMix() {
     );
 
     setEspecies(novasEspecies);
+    marcarAlteracao();
     setForm((prev) => ({ ...prev, especie: nome }));
     setEspecieFiltro(nome);
     setNovaEspecie("");
@@ -235,14 +274,19 @@ export default function StatusMix() {
 
     const novas = especies.filter((especie) => especie !== especieFiltro);
     setEspecies(novas);
+    marcarAlteracao();
     setEspecieFiltro(novas[0] || "");
     setForm((prev) => ({ ...prev, especie: novas[0] || "" }));
   };
 
   const exportarJsonClipboard = async () => {
+    const novaVersao = versaoSave + 1;
+    const agora = new Date().toISOString();
+
     const dados = {
-      versao: 1,
-      exportedAt: new Date().toISOString(),
+      versao: novaVersao,
+      exportedAt: agora,
+      ultimaAlteracao: dataUltimaAlteracao,
       especies,
       dinos,
       especieFiltro,
@@ -250,7 +294,10 @@ export default function StatusMix() {
 
     try {
       await navigator.clipboard.writeText(JSON.stringify(dados, null, 2));
-      alert("JSON do Status Mix copiado para a área de transferência!");
+      setVersaoSave(novaVersao);
+      setDataSaveCarregado(agora);
+      setDataUltimaAlteracao(null);
+      alert(`JSON v${novaVersao} do Status Mix copiado para a área de transferência!`);
     } catch {
       alert("Não foi possível acessar a área de transferência. Verifique a permissão do navegador.");
     }
@@ -315,13 +362,23 @@ export default function StatusMix() {
         return;
       }
 
+      const versaoImportada =
+        Number.isInteger(dados.versao) && dados.versao >= 0 ? dados.versao : 0;
+      const dataSaveImportado =
+        typeof dados.exportedAt === "string" ? dados.exportedAt : null;
+
       setEspecies(especiesFinais);
       setDinos(dinosImportados);
       setEspecieFiltro(filtroImportado);
       setForm({ ...FORM_VAZIO, especie: filtroImportado });
       setEditandoId(null);
+      setVersaoSave(versaoImportada);
+      setDataSaveCarregado(dataSaveImportado);
+      setDataUltimaAlteracao(null);
 
-      alert("Dados importados com sucesso!");
+      alert(
+        `Dados importados com sucesso!${versaoImportada ? ` Versão ${versaoImportada}.` : ""}`
+      );
     } catch {
       alert("Não foi possível importar. A área de transferência não contém um JSON válido do Status Mix.");
     }
@@ -357,6 +414,7 @@ export default function StatusMix() {
 
       return novaLista;
     });
+    marcarAlteracao();
   };
 
   const ehMelhorStatus = (dino, key) => {
@@ -495,32 +553,7 @@ export default function StatusMix() {
         </div>
       </section>
 
-      <section className="statusmix-card transferencia-card">
-        <div className="section-title-row">
-          <div>
-            <h2>Importar / Exportar</h2>
-            <p>Copie toda a coleção como JSON ou restaure dados copiados anteriormente.</p>
-          </div>
-          <div className="clipboard-actions">
-            <button
-              type="button"
-              className="btn-secundario"
-              onClick={exportarJsonClipboard}
-              title="Copiar JSON para a área de transferência"
-            >
-              📋 Exportar JSON
-            </button>
-            <button
-              type="button"
-              className="btn-secundario"
-              onClick={importarJsonClipboard}
-              title="Importar JSON da área de transferência"
-            >
-              📥 Importar JSON
-            </button>
-          </div>
-        </div>
-      </section>
+
 
       {especieFiltro && dinosFiltrados.length > 0 && (
         <>
@@ -669,6 +702,48 @@ export default function StatusMix() {
           </div>
         </div>
       )}
+
+      <section className="statusmix-card transferencia-card">
+        <div className="section-title-row">
+          <div>
+            <h2>Importar / Exportar</h2>
+            <p>Copie toda a coleção como JSON ou restaure dados copiados anteriormente.</p>
+          </div>
+          <div className="save-info">
+            <div className="save-info-item">
+              <span>Save carregado</span>
+              <strong>{formatarData(dataSaveCarregado)}</strong>
+            </div>
+            <div className="save-info-item">
+              <span>Última alteração</span>
+              <strong>{formatarData(dataUltimaAlteracao)}</strong>
+            </div>
+            <div className="save-info-item">
+              <span>Versão</span>
+              <strong>v{versaoSave}</strong>
+            </div>
+          </div>
+
+          <div className="clipboard-actions">
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={exportarJsonClipboard}
+              title="Copiar JSON para a área de transferência"
+            >
+              📋 Exportar JSON
+            </button>
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={importarJsonClipboard}
+              title="Importar JSON da área de transferência"
+            >
+              📥 Importar JSON
+            </button>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

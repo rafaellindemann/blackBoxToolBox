@@ -1,0 +1,119 @@
+{
+  "versao": 1,
+  "exportedAt": "2026-08-25T18:09:50.090Z",
+  "ultimaAlteracao": "2026-08-25T17:47:26.058Z",
+  "especies": [
+    "Ankylo",
+    "Archelon",
+    "Maeguana"
+  ],
+  "dinos": [
+    {
+      "id": "2d5f8695-bb8c-40c8-a03e-9aacdf362af9",
+      "especie": "Ankylo",
+      "nome": "anky-06-m",
+      "genero": "Macho",
+      "vida": 73,
+      "dano": 76,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 65,
+      "comida": 89,
+      "nivel": 455
+    },
+    {
+      "id": "d7f6624e-c75d-4edf-8a56-d7ed3e32aa3a",
+      "especie": "Ankylo",
+      "nome": "anky-f-02",
+      "genero": "Fêmea",
+      "vida": 72,
+      "dano": 76,
+      "estamina": 74,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 64,
+      "comida": 89
+    },
+    {
+      "id": "46b6f290-daed-4fe8-9df7-57cf0cce25b7",
+      "especie": "Ankylo",
+      "nome": "anky-0-m",
+      "genero": "Macho",
+      "vida": 73,
+      "dano": 76,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 61,
+      "oxigenio": 65,
+      "comida": 74
+    },
+    {
+      "id": "72276e4a-5fec-4566-ace1-69a7a7bf5b99",
+      "especie": "Ankylo",
+      "nome": "Grolli",
+      "genero": "Fêmea",
+      "vida": 72,
+      "dano": 66,
+      "estamina": 74,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 64,
+      "comida": 89
+    },
+    {
+      "id": "df0b3e96-1b62-4a87-a845-72aee57b0ad1",
+      "especie": "Ankylo",
+      "nome": "anky-f-01",
+      "genero": "Fêmea",
+      "vida": 73,
+      "dano": 66,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 61,
+      "oxigenio": 64,
+      "comida": 89
+    },
+    {
+      "id": "46329793-fa77-493e-9868-5dba67b6b0c9",
+      "especie": "Ankylo",
+      "nome": "anky-f-03",
+      "genero": "Fêmea",
+      "vida": 73,
+      "dano": 66,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 61,
+      "oxigenio": 64,
+      "comida": 74
+    },
+    {
+      "id": "84678727-f236-40c6-a197-d2e274ca2c13",
+      "especie": "Ankylo",
+      "nome": "anky-04-m",
+      "genero": "Macho",
+      "vida": 73,
+      "dano": 66,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 61,
+      "oxigenio": 64,
+      "comida": 74
+    },
+    {
+      "id": "5a46f66b-1729-4515-b105-303cbbfbc5c5",
+      "especie": "Ankylo",
+      "nome": "anky-05-m",
+      "genero": "Macho",
+      "vida": 73,
+      "dano": 76,
+      "estamina": 71,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 64,
+      "comida": 89,
+      "nivel": 454
+    }
+  ],
+  "especieFiltro": "Ankylo"
+}

@@ -20,12 +20,12 @@ function Navbar() {
         <h2>Black Box Toolbox</h2>
         <img src="/box.svg" alt="" />
         <div className="links-container">
-          <Link to="/" className="linkNavbar">Conversor Tek</Link>
+          <Link to="/" className="linkNavbar">Status Mix</Link>
+          <Link to="/conversor" className="linkNavbar">Conversor Tek</Link>
           <Link to="/pagador" className="linkNavbar">Pagador Tek</Link>
           <Link to="/tradutor" className="linkNavbar">Tradutor Tek</Link>
           <Link to="/decaytimers" className="linkNavbar">Decay Timers</Link>
           <Link to="/estoque" className="linkNavbar">Estoque</Link>
-          <Link to="/statusmix" className="linkNavbar">Status Mix</Link>
           {/* <Link to="/imprinttimers" className="linkNavbar">Imprint Timers</Link> */}
          <button onClick={() => setModalAberto(true)} className="btn-config">
            <FaCog />
