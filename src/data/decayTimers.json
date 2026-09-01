@@ -1,0 +1,40 @@
+{
+  "exportedAt": "2026-09-01T20:07:24.795Z",
+  "bases": [
+    {
+      "id": "1896167f-fed0-4796-931a-c364a1b29474",
+      "nome": "Astraeos main",
+      "material": "Metal",
+      "map": "astra",
+      "ultimaVisita": "2026-09-01T20:03:29.400Z"
+    },
+    {
+      "id": "9dc7ebab-62e5-4465-b810-d51ec307e972",
+      "nome": "Piscina",
+      "material": "Metal",
+      "map": "astra",
+      "ultimaVisita": "2026-09-01T20:04:26.164Z"
+    },
+    {
+      "id": "f4c64637-a92d-4fe3-87d0-30c1b9db9570",
+      "nome": "barraco sul",
+      "material": "Metal",
+      "map": "rag",
+      "ultimaVisita": "2026-09-01T20:06:29.920Z"
+    },
+    {
+      "id": "c9afbfab-ebc6-4c8c-8e67-1feb2bb72f83",
+      "nome": "Cave castelo",
+      "material": "Metal",
+      "map": "valg",
+      "ultimaVisita": "2026-09-01T20:06:42.351Z"
+    },
+    {
+      "id": "fce75267-9ab2-4fd1-9875-1144a8e263f8",
+      "nome": "Barraco extinction",
+      "material": "Metal",
+      "map": "ext",
+      "ultimaVisita": "2026-09-01T20:07:02.149Z"
+    }
+  ]
+}
