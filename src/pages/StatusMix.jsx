@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import "./StatusMix.css";
 
 const STORAGE_KEY = "statusMixState";
+const GITHUB_SAVE_URL = "https://raw.githubusercontent.com/rafaellindemann/blackBoxToolBox/main/src/data/statusMix.json";
 
 const STATUS = [
   { key: "vida", label: "Vida" },
@@ -303,84 +304,94 @@ export default function StatusMix() {
     }
   };
 
+  const aplicarDadosImportados = (dados, origem = "JSON") => {
+    if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) {
+      throw new Error("Formato inválido");
+    }
+
+    const especiesImportadas = dados.especies
+      .filter((especie) => typeof especie === "string" && especie.trim())
+      .map((especie) => especie.trim());
+
+    const dinosImportados = dados.dinos.map((dino) => {
+      if (!dino || typeof dino !== "object" || typeof dino.especie !== "string" || typeof dino.nome !== "string") {
+        throw new Error("Dino inválido");
+      }
+
+      const stats = STATUS.reduce((acc, { key }) => {
+        const valor = normalizarNumero(dino[key]);
+        if (valor === null) throw new Error(`Status inválido: ${key}`);
+        acc[key] = valor;
+        return acc;
+      }, {});
+
+      return {
+        ...dino,
+        id: dino.id || uuidv4(),
+        especie: dino.especie.trim(),
+        nome: dino.nome.trim(),
+        genero: dino.genero === "Fêmea" ? "Fêmea" : "Macho",
+        ...stats,
+        nivel: calcularNivel(stats),
+      };
+    });
+
+    const especiesDosDinos = dinosImportados.map((dino) => dino.especie);
+    const especiesFinais = [...new Set([...especiesImportadas, ...especiesDosDinos])]
+      .sort((a, b) => a.localeCompare(b, "pt-BR"));
+
+    const filtroImportado =
+      typeof dados.especieFiltro === "string" && especiesFinais.includes(dados.especieFiltro)
+        ? dados.especieFiltro
+        : especiesFinais[0] || "";
+
+    const versaoImportada = Number.isInteger(dados.versao) && dados.versao >= 0 ? dados.versao : 0;
+    const dataSaveImportado = typeof dados.exportedAt === "string" ? dados.exportedAt : null;
+
+    if (!confirm(`Carregar ${dinosImportados.length} dino(s) e ${especiesFinais.length} espécie(s) de ${origem}? Isso substituirá os dados atuais do Status Mix.`)) {
+      return false;
+    }
+
+    setEspecies(especiesFinais);
+    setDinos(dinosImportados);
+    setEspecieFiltro(filtroImportado);
+    setForm({ ...FORM_VAZIO, especie: filtroImportado });
+    setEditandoId(null);
+    setVersaoSave(versaoImportada);
+    setDataSaveCarregado(dataSaveImportado);
+    setDataUltimaAlteracao(null);
+
+    return { versaoImportada };
+  };
+
   const importarJsonClipboard = async () => {
     try {
       const texto = await navigator.clipboard.readText();
       const dados = JSON.parse(texto);
+      const resultado = aplicarDadosImportados(dados, "área de transferência");
 
-      if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) {
-        throw new Error("Formato inválido");
+      if (resultado) {
+        alert(`Dados importados com sucesso!${resultado.versaoImportada ? ` Versão ${resultado.versaoImportada}.` : ""}`);
       }
-
-      const especiesImportadas = dados.especies
-        .filter((especie) => typeof especie === "string" && especie.trim())
-        .map((especie) => especie.trim());
-
-      const dinosImportados = dados.dinos.map((dino) => {
-        if (
-          !dino ||
-          typeof dino !== "object" ||
-          typeof dino.especie !== "string" ||
-          typeof dino.nome !== "string"
-        ) {
-          throw new Error("Dino inválido");
-        }
-
-        const stats = STATUS.reduce((acc, { key }) => {
-          const valor = normalizarNumero(dino[key]);
-          if (valor === null) throw new Error(`Status inválido: ${key}`);
-          acc[key] = valor;
-          return acc;
-        }, {});
-
-        return {
-          ...dino,
-          id: dino.id || uuidv4(),
-          especie: dino.especie.trim(),
-          nome: dino.nome.trim(),
-          genero: dino.genero === "Fêmea" ? "Fêmea" : "Macho",
-          ...stats,
-          nivel: calcularNivel(stats),
-        };
-      });
-
-      const especiesDosDinos = dinosImportados.map((dino) => dino.especie);
-      const especiesFinais = [...new Set([...especiesImportadas, ...especiesDosDinos])]
-        .sort((a, b) => a.localeCompare(b, "pt-BR"));
-
-      const filtroImportado =
-        typeof dados.especieFiltro === "string" &&
-        especiesFinais.includes(dados.especieFiltro)
-          ? dados.especieFiltro
-          : especiesFinais[0] || "";
-
-      if (
-        !confirm(
-          `Importar ${dinosImportados.length} dino(s) e ${especiesFinais.length} espécie(s)? Isso substituirá os dados atuais do Status Mix.`
-        )
-      ) {
-        return;
-      }
-
-      const versaoImportada =
-        Number.isInteger(dados.versao) && dados.versao >= 0 ? dados.versao : 0;
-      const dataSaveImportado =
-        typeof dados.exportedAt === "string" ? dados.exportedAt : null;
-
-      setEspecies(especiesFinais);
-      setDinos(dinosImportados);
-      setEspecieFiltro(filtroImportado);
-      setForm({ ...FORM_VAZIO, especie: filtroImportado });
-      setEditandoId(null);
-      setVersaoSave(versaoImportada);
-      setDataSaveCarregado(dataSaveImportado);
-      setDataUltimaAlteracao(null);
-
-      alert(
-        `Dados importados com sucesso!${versaoImportada ? ` Versão ${versaoImportada}.` : ""}`
-      );
     } catch {
       alert("Não foi possível importar. A área de transferência não contém um JSON válido do Status Mix.");
+    }
+  };
+
+  const carregarJsonGithub = async () => {
+    try {
+      const resposta = await fetch(`${GITHUB_SAVE_URL}?t=${Date.now()}`, { cache: "no-store" });
+      if (!resposta.ok) throw new Error(`GitHub respondeu com status ${resposta.status}`);
+
+      const dados = await resposta.json();
+      const resultado = aplicarDadosImportados(dados, "GitHub");
+
+      if (resultado) {
+        alert(`Save do GitHub carregado com sucesso!${resultado.versaoImportada ? ` Versão ${resultado.versaoImportada}.` : ""}`);
+      }
+    } catch (erro) {
+      console.error("Erro ao carregar save do GitHub:", erro);
+      alert("Não foi possível carregar o statusMix.json do GitHub.");
     }
   };
 
@@ -740,6 +751,14 @@ export default function StatusMix() {
               title="Importar JSON da área de transferência"
             >
               📥 Importar JSON
+            </button>
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={carregarJsonGithub}
+              title="Carregar o statusMix.json publicado no GitHub"
+            >
+              ☁️ Carregar do GitHub
             </button>
           </div>
         </div>
