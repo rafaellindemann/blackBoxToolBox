@@ -1,7 +1,7 @@
 {
-  "versao": 4,
-  "exportedAt": "2026-09-01T19:56:28.199Z",
-  "ultimaAlteracao": "2026-09-01T17:11:43.380Z",
+  "versao": 5,
+  "exportedAt": "2026-09-02T06:02:49.447Z",
+  "ultimaAlteracao": "2026-09-02T05:01:13.701Z",
   "especies": [
     "Ankylo",
     "Archelon",
@@ -10,6 +10,34 @@
     "Yuti"
   ],
   "dinos": [
+    {
+      "id": "9df77fc3-9121-4bef-b327-9e1b31adc5b0",
+      "especie": "Ankylo",
+      "nome": "anky-10-m",
+      "genero": "Macho",
+      "vida": 79,
+      "dano": 81,
+      "estamina": 82,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 69,
+      "comida": 65,
+      "nivel": 457
+    },
+    {
+      "id": "6fc288b1-a38e-47fe-b4b7-422dc353f9cc",
+      "especie": "Ankylo",
+      "nome": "anky-11-f",
+      "genero": "Fêmea",
+      "vida": 79,
+      "dano": 81,
+      "estamina": 82,
+      "velocidade": 0,
+      "peso": 80,
+      "oxigenio": 64,
+      "comida": 89,
+      "nivel": 476
+    },
     {
       "id": "90847232-3f6c-4028-9b96-fc82ffccf07c",
       "especie": "Ankylo",
@@ -137,6 +165,20 @@
       "nivel": 410
     },
     {
+      "id": "c4cb4497-0b82-4796-a14e-4ce2ac9d42f9",
+      "especie": "Yuti",
+      "nome": "Yuti-w1-m",
+      "genero": "Macho",
+      "vida": 78,
+      "dano": 80,
+      "estamina": 67,
+      "velocidade": 0,
+      "peso": 86,
+      "oxigenio": 78,
+      "comida": 59,
+      "nivel": 449
+    },
+    {
       "id": "5a46f66b-1729-4515-b105-303cbbfbc5c5",
       "especie": "Ankylo",
       "nome": "anky-05-m",
@@ -165,5 +207,5 @@
       "nivel": 455
     }
   ],
-  "especieFiltro": "Megatério"
+  "especieFiltro": "Ankylo"
 }
