@@ -8,6 +8,7 @@ import DinoNameGenerator from "../pages/DinoNameGenerator";
 import DecayTimers from "../pages/DecayTimers";
 import EstoqueDinos from "../pages/EstoqueDinos";
 import StatusMix from "../pages/StatusMix";
+import Tekgrams from "../pages/Tekgrams";
 
 const router = createBrowserRouter([
   {
@@ -15,12 +16,13 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <StatusMix /> },
+      { path: "/tekgrams", element: <Tekgrams /> },
+      { path: "/decaytimers", element: <DecayTimers /> },
+      { path: "/dinonamegenerator", element: <DinoNameGenerator /> },
       { path: "/conversor", element: <ConversorTek /> },
       { path: "/pagador", element: <PagadorTek /> },
       { path: "/tradutor", element: <TradutorTek /> },
       { path: "/imprinttimers", element: <BlackBoxImprintTimers /> },
-      { path: "/dinonamegenerator", element: <DinoNameGenerator /> },
-      { path: "/decaytimers", element: <DecayTimers /> },
       { path: "/estoque", element: <EstoqueDinos /> },
     ],
   },
