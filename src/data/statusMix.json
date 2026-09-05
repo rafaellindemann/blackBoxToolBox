@@ -1,7 +1,7 @@
 {
-  "versao": 5,
-  "exportedAt": "2026-09-02T06:02:49.447Z",
-  "ultimaAlteracao": "2026-09-02T05:01:13.701Z",
+  "versao": 6,
+  "exportedAt": "2026-09-05T05:43:54.265Z",
+  "ultimaAlteracao": "2026-09-05T05:15:40.374Z",
   "especies": [
     "Ankylo",
     "Archelon",
@@ -205,6 +205,20 @@
       "oxigenio": 65,
       "comida": 89,
       "nivel": 455
+    },
+    {
+      "id": "d36d7b0d-f2b2-4c21-85af-0cbeafa78e46",
+      "especie": "Ankylo",
+      "nome": "anky-w12-m",
+      "genero": "Macho",
+      "vida": 76,
+      "dano": 62,
+      "estamina": 61,
+      "velocidade": 0,
+      "peso": 92,
+      "oxigenio": 80,
+      "comida": 77,
+      "nivel": 449
     }
   ],
   "especieFiltro": "Ankylo"
