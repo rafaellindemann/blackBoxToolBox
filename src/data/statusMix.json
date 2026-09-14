@@ -1,7 +1,7 @@
 {
-  "versao": 8,
-  "exportedAt": "2026-09-14T22:22:12.404Z",
-  "ultimaAlteracao": "2026-09-14T22:19:34.334Z",
+  "versao": 10,
+  "exportedAt": "2026-09-14T23:38:40.100Z",
+  "ultimaAlteracao": null,
   "especies": [
     "Ankylo",
     "Archelon",
@@ -195,6 +195,20 @@
       "nivel": 419
     },
     {
+      "id": "ee2f91ef-0ed6-4b61-859a-b17a94daa4c4",
+      "especie": "Argentavis",
+      "nome": "arg-4m",
+      "genero": "Macho",
+      "vida": 88,
+      "dano": 80,
+      "estamina": 81,
+      "velocidade": 0,
+      "peso": 83,
+      "oxigenio": 74,
+      "comida": 60,
+      "nivel": 467
+    },
+    {
       "id": "6e6eac1c-c370-4c9f-a069-c290f5a93602",
       "especie": "Argentavis",
       "nome": "arg-w1-f",
@@ -237,5 +251,5 @@
       "nivel": 446
     }
   ],
-  "especieFiltro": "Ankylo"
+  "especieFiltro": "Argentavis"
 }
