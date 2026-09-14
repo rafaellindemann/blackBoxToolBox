@@ -1,40 +1,61 @@
 {
-  "exportedAt": "2026-09-01T20:07:24.795Z",
+  "exportedAt": "2026-09-14T23:48:00.206Z",
   "bases": [
     {
       "id": "1896167f-fed0-4796-931a-c364a1b29474",
       "nome": "Astraeos main",
       "material": "Metal",
       "map": "astra",
-      "ultimaVisita": "2026-09-01T20:03:29.400Z"
+      "ultimaVisita": "2026-09-01T20:03:29.400Z",
+      "diasPersonalizados": null
     },
     {
       "id": "9dc7ebab-62e5-4465-b810-d51ec307e972",
       "nome": "Piscina",
       "material": "Metal",
       "map": "astra",
-      "ultimaVisita": "2026-09-01T20:04:26.164Z"
+      "ultimaVisita": "2026-09-01T20:04:26.164Z",
+      "diasPersonalizados": null
     },
     {
       "id": "f4c64637-a92d-4fe3-87d0-30c1b9db9570",
       "nome": "barraco sul",
       "material": "Metal",
       "map": "rag",
-      "ultimaVisita": "2026-09-01T20:06:29.920Z"
+      "ultimaVisita": "2026-09-01T20:06:29.920Z",
+      "diasPersonalizados": null
     },
     {
       "id": "c9afbfab-ebc6-4c8c-8e67-1feb2bb72f83",
       "nome": "Cave castelo",
       "material": "Metal",
       "map": "valg",
-      "ultimaVisita": "2026-09-01T20:06:42.351Z"
+      "ultimaVisita": "2026-09-01T20:06:42.351Z",
+      "diasPersonalizados": null
     },
     {
       "id": "fce75267-9ab2-4fd1-9875-1144a8e263f8",
       "nome": "Barraco extinction",
       "material": "Metal",
       "map": "ext",
-      "ultimaVisita": "2026-09-01T20:07:02.149Z"
+      "ultimaVisita": "2026-09-01T20:07:02.149Z",
+      "diasPersonalizados": null
+    },
+    {
+      "id": "30243952-ed94-4d48-8fd1-d9bbe11f5dbc",
+      "nome": "Rag-pirate",
+      "material": "Metal",
+      "diasPersonalizados": null,
+      "map": "rag",
+      "ultimaVisita": "2026-09-14T23:46:20.270Z"
+    },
+    {
+      "id": "5f74a199-18e6-4836-90b0-8b546f7f6be7",
+      "nome": "Barraco scorched",
+      "material": "Metal",
+      "diasPersonalizados": null,
+      "map": "SE",
+      "ultimaVisita": "2026-09-14T23:47:27.043Z"
     }
   ]
 }
