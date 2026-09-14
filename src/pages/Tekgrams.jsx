@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import {
   TEKGRAM_BOSSES,
   TEKGRAM_COLUMNS,
@@ -28,27 +28,36 @@ export default function Tekgrams() {
   const [tekgramSelecionado, setTekgramSelecionado] = useState(null);
   const [filtroBoss, setFiltroBoss] = useState("");
   const [filtroTekgram, setFiltroTekgram] = useState("");
+  const tableWrapRef = useRef(null);
 
   const bossesOrdenados = useMemo(() => {
     const filtro = normalizarBusca(filtroBoss);
-    let lista = TEKGRAM_BOSSES.filter((boss) =>
+    const lista = TEKGRAM_BOSSES.filter((boss) =>
       normalizarBusca(boss.name).includes(filtro)
     );
 
-    if (!tekgramSelecionado) return lista;
-
-    const tekgram = TEKGRAMS.find((item) => item.id === tekgramSelecionado);
-    if (!tekgram) return lista;
+    const tekgram = tekgramSelecionado
+      ? TEKGRAMS.find((item) => item.id === tekgramSelecionado)
+      : null;
 
     return [...lista].sort((a, b) => {
-      const diffA = menorDificuldadeNoBoss(tekgram, a);
-      const diffB = menorDificuldadeNoBoss(tekgram, b);
+      if (bossSelecionado) {
+        if (a.id === bossSelecionado && b.id !== bossSelecionado) return -1;
+        if (b.id === bossSelecionado && a.id !== bossSelecionado) return 1;
+      }
 
-      if (diffA !== diffB) return diffA - diffB;
-      return TEKGRAM_BOSSES.findIndex((boss) => boss.id === a.id) -
-        TEKGRAM_BOSSES.findIndex((boss) => boss.id === b.id);
+      if (tekgram) {
+        const diffA = menorDificuldadeNoBoss(tekgram, a);
+        const diffB = menorDificuldadeNoBoss(tekgram, b);
+        if (diffA !== diffB) return diffA - diffB;
+      }
+
+      return (
+        TEKGRAM_BOSSES.findIndex((boss) => boss.id === a.id) -
+        TEKGRAM_BOSSES.findIndex((boss) => boss.id === b.id)
+      );
     });
-  }, [tekgramSelecionado, filtroBoss]);
+  }, [bossSelecionado, tekgramSelecionado, filtroBoss]);
 
   const colunasOrdenadas = useMemo(
     () =>
@@ -62,27 +71,52 @@ export default function Tekgrams() {
 
   const tekgramsOrdenados = useMemo(() => {
     const filtro = normalizarBusca(filtroTekgram);
-    let lista = TEKGRAMS.filter((tekgram) =>
+    const lista = TEKGRAMS.filter((tekgram) =>
       normalizarBusca(tekgram.name).includes(filtro)
     );
 
-    if (!bossSelecionado) return lista;
-
-    const boss = TEKGRAM_BOSSES.find((item) => item.id === bossSelecionado);
-    if (!boss) return lista;
+    const boss = bossSelecionado
+      ? TEKGRAM_BOSSES.find((item) => item.id === bossSelecionado)
+      : null;
 
     return [...lista].sort((a, b) => {
-      const diffA = menorDificuldadeNoBoss(a, boss);
-      const diffB = menorDificuldadeNoBoss(b, boss);
+      if (tekgramSelecionado) {
+        if (a.id === tekgramSelecionado && b.id !== tekgramSelecionado) return -1;
+        if (b.id === tekgramSelecionado && a.id !== tekgramSelecionado) return 1;
+      }
 
-      if (diffA !== diffB) return diffA - diffB;
+      if (boss) {
+        const diffA = menorDificuldadeNoBoss(a, boss);
+        const diffB = menorDificuldadeNoBoss(b, boss);
+        if (diffA !== diffB) return diffA - diffB;
+      }
+
       return a.originalIndex - b.originalIndex;
     });
-  }, [bossSelecionado, filtroTekgram]);
+  }, [bossSelecionado, tekgramSelecionado, filtroTekgram]);
+
+  const voltarTabelaAoInicio = () => {
+    requestAnimationFrame(() => {
+      tableWrapRef.current?.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    });
+  };
+
+  const selecionarBoss = (bossId) => {
+    setBossSelecionado((atual) => (atual === bossId ? null : bossId));
+    voltarTabelaAoInicio();
+  };
+
+  const selecionarTekgram = (tekgramId) => {
+    setTekgramSelecionado((atual) =>
+      atual === tekgramId ? null : tekgramId
+    );
+    voltarTabelaAoInicio();
+  };
 
   const resetarOrdenacao = () => {
     setBossSelecionado(null);
     setTekgramSelecionado(null);
+    voltarTabelaAoInicio();
   };
 
   const bossTemTekgramSelecionado = (boss) => {
@@ -97,8 +131,9 @@ export default function Tekgrams() {
         <div>
           <h1>⚙️ Tekgrams</h1>
           <p>
-            Clique em um boss para trazer os Tekgrams dele para cima. Clique em um
-            Tekgram para trazer à esquerda os bosses que o liberam.
+            Clique em um boss para trazê-lo para a primeira coluna e os Tekgrams
+            dele para cima. Clique em um Tekgram para trazê-lo para a primeira linha
+            e os bosses que o liberam para a esquerda.
           </p>
         </div>
         <a href={SOURCE_URL} target="_blank" rel="noreferrer" className="tekgrams-source">
@@ -151,7 +186,7 @@ export default function Tekgrams() {
       </section>
 
       <section className="tekgrams-card">
-        <div className="tekgrams-table-wrap">
+        <div className="tekgrams-table-wrap" ref={tableWrapRef}>
           <table className="tekgrams-table">
             <thead>
               <tr className="boss-row">
@@ -168,12 +203,8 @@ export default function Tekgrams() {
                   >
                     <button
                       type="button"
-                      onClick={() =>
-                        setBossSelecionado((atual) =>
-                          atual === boss.id ? null : boss.id
-                        )
-                      }
-                      title={`Ordenar Tekgrams por ${boss.name}`}
+                      onClick={() => selecionarBoss(boss.id)}
+                      title={`Trazer ${boss.name} para a primeira coluna e priorizar seus Tekgrams`}
                     >
                       {boss.name}
                     </button>
@@ -212,12 +243,8 @@ export default function Tekgrams() {
                     <th className="sticky-name tekgram-name-cell">
                       <button
                         type="button"
-                        onClick={() =>
-                          setTekgramSelecionado((atual) =>
-                            atual === tekgram.id ? null : tekgram.id
-                          )
-                        }
-                        title={`Ordenar bosses que liberam ${tekgram.name}`}
+                        onClick={() => selecionarTekgram(tekgram.id)}
+                        title={`Trazer ${tekgram.name} para a primeira linha e priorizar seus bosses`}
                       >
                         {tekgram.name}
                       </button>

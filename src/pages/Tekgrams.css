@@ -284,3 +284,13 @@
     max-width: 190px;
   }
 }
+
+
+/* Seleções ficam visualmente ancoradas no início da tabela */
+.boss-head.selected {
+  box-shadow: inset 0 -2px 0 var(--cor-laranja);
+}
+
+.selected-row .tekgram-name-cell {
+  box-shadow: inset -2px 0 0 var(--cor-laranja);
+}
