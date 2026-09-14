@@ -1,12 +1,14 @@
 {
-  "versao": 6,
-  "exportedAt": "2026-09-05T05:43:54.265Z",
-  "ultimaAlteracao": "2026-09-05T05:15:40.374Z",
+  "versao": 8,
+  "exportedAt": "2026-09-14T22:22:12.404Z",
+  "ultimaAlteracao": "2026-09-14T22:19:34.334Z",
   "especies": [
     "Ankylo",
     "Archelon",
+    "Argentavis",
     "Maeguana",
     "Megatério",
+    "Therizino",
     "Yuti"
   ],
   "dinos": [
@@ -53,20 +55,6 @@
       "nivel": 449
     },
     {
-      "id": "d7f6624e-c75d-4edf-8a56-d7ed3e32aa3a",
-      "especie": "Ankylo",
-      "nome": "anky-f-02",
-      "genero": "Fêmea",
-      "vida": 72,
-      "dano": 76,
-      "estamina": 74,
-      "velocidade": 0,
-      "peso": 80,
-      "oxigenio": 64,
-      "comida": 89,
-      "nivel": 456
-    },
-    {
       "id": "87783e70-33b8-436a-aec3-4e37ba64f46f",
       "especie": "Ankylo",
       "nome": "anky-09-f",
@@ -79,34 +67,6 @@
       "oxigenio": 64,
       "comida": 89,
       "nivel": 456
-    },
-    {
-      "id": "2d5f8695-bb8c-40c8-a03e-9aacdf362af9",
-      "especie": "Ankylo",
-      "nome": "anky-06-m",
-      "genero": "Macho",
-      "vida": 73,
-      "dano": 76,
-      "estamina": 71,
-      "velocidade": 0,
-      "peso": 80,
-      "oxigenio": 65,
-      "comida": 89,
-      "nivel": 455
-    },
-    {
-      "id": "46b6f290-daed-4fe8-9df7-57cf0cce25b7",
-      "especie": "Ankylo",
-      "nome": "anky-0-m",
-      "genero": "Macho",
-      "vida": 73,
-      "dano": 76,
-      "estamina": 71,
-      "velocidade": 0,
-      "peso": 61,
-      "oxigenio": 65,
-      "comida": 74,
-      "nivel": 421
     },
     {
       "id": "72276e4a-5fec-4566-ace1-69a7a7bf5b99",
@@ -135,34 +95,6 @@
       "oxigenio": 64,
       "comida": 89,
       "nivel": 425
-    },
-    {
-      "id": "46329793-fa77-493e-9868-5dba67b6b0c9",
-      "especie": "Ankylo",
-      "nome": "anky-f-03",
-      "genero": "Fêmea",
-      "vida": 73,
-      "dano": 66,
-      "estamina": 71,
-      "velocidade": 0,
-      "peso": 61,
-      "oxigenio": 64,
-      "comida": 74,
-      "nivel": 410
-    },
-    {
-      "id": "84678727-f236-40c6-a197-d2e274ca2c13",
-      "especie": "Ankylo",
-      "nome": "anky-04-m",
-      "genero": "Macho",
-      "vida": 73,
-      "dano": 66,
-      "estamina": 71,
-      "velocidade": 0,
-      "peso": 61,
-      "oxigenio": 64,
-      "comida": 74,
-      "nivel": 410
     },
     {
       "id": "c4cb4497-0b82-4796-a14e-4ce2ac9d42f9",
@@ -219,6 +151,90 @@
       "oxigenio": 80,
       "comida": 77,
       "nivel": 449
+    },
+    {
+      "id": "f947b6dc-0c50-4b74-97b0-ade3b96bbf26",
+      "especie": "Megatério",
+      "nome": "megat-w0-m",
+      "genero": "Macho",
+      "vida": 79,
+      "dano": 65,
+      "estamina": 73,
+      "velocidade": 0,
+      "peso": 75,
+      "oxigenio": 69,
+      "comida": 72,
+      "nivel": 434
+    },
+    {
+      "id": "c3a0fc74-ab38-45a9-b0de-8c404cf4301d",
+      "especie": "Therizino",
+      "nome": "theriz-w0-m",
+      "genero": "Macho",
+      "vida": 71,
+      "dano": 73,
+      "estamina": 81,
+      "velocidade": 0,
+      "peso": 63,
+      "oxigenio": 74,
+      "comida": 71,
+      "nivel": 434
+    },
+    {
+      "id": "7ab32a81-f98a-4136-93bf-10fb11ad4170",
+      "especie": "Argentavis",
+      "nome": "arg-w0-m",
+      "genero": "Macho",
+      "vida": 57,
+      "dano": 69,
+      "estamina": 70,
+      "velocidade": 0,
+      "peso": 75,
+      "oxigenio": 65,
+      "comida": 82,
+      "nivel": 419
+    },
+    {
+      "id": "6e6eac1c-c370-4c9f-a069-c290f5a93602",
+      "especie": "Argentavis",
+      "nome": "arg-w1-f",
+      "genero": "Fêmea",
+      "vida": 79,
+      "dano": 80,
+      "estamina": 69,
+      "velocidade": 0,
+      "peso": 83,
+      "oxigenio": 74,
+      "comida": 63,
+      "nivel": 449
+    },
+    {
+      "id": "e7d13b5f-d0e0-477f-b938-f256d9599ac1",
+      "especie": "Argentavis",
+      "nome": "arg-w2-m",
+      "genero": "Macho",
+      "vida": 88,
+      "dano": 71,
+      "estamina": 81,
+      "velocidade": 0,
+      "peso": 77,
+      "oxigenio": 56,
+      "comida": 60,
+      "nivel": 434
+    },
+    {
+      "id": "c10ced50-4493-4087-bb8e-3c3928bba0b4",
+      "especie": "Argentavis",
+      "nome": "arg-3-f",
+      "genero": "Fêmea",
+      "vida": 79,
+      "dano": 80,
+      "estamina": 69,
+      "velocidade": 0,
+      "peso": 83,
+      "oxigenio": 74,
+      "comida": 60,
+      "nivel": 446
     }
   ],
   "especieFiltro": "Ankylo"
