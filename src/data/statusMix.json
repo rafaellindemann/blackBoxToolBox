@@ -1,7 +1,7 @@
 {
-  "versao": 10,
-  "exportedAt": "2026-09-14T23:38:40.100Z",
-  "ultimaAlteracao": null,
+  "versao": 11,
+  "exportedAt": "2026-09-15T00:53:22.751Z",
+  "ultimaAlteracao": "2026-09-15T00:40:46.985Z",
   "especies": [
     "Ankylo",
     "Archelon",
@@ -249,7 +249,21 @@
       "oxigenio": 74,
       "comida": 60,
       "nivel": 446
+    },
+    {
+      "id": "044b9ebd-977f-4f14-a1fb-f66adb7289d2",
+      "especie": "Ankylo",
+      "nome": "Jungle",
+      "genero": "Fêmea",
+      "vida": 68,
+      "dano": 79,
+      "estamina": 83,
+      "velocidade": 0,
+      "peso": 72,
+      "oxigenio": 70,
+      "comida": 76,
+      "nivel": 449
     }
   ],
-  "especieFiltro": "Argentavis"
+  "especieFiltro": "Ankylo"
 }
