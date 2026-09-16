@@ -1,7 +1,7 @@
 {
-  "versao": 11,
-  "exportedAt": "2026-09-15T00:53:22.751Z",
-  "ultimaAlteracao": "2026-09-15T00:40:46.985Z",
+  "versao": 12,
+  "exportedAt": "2026-09-16T13:33:54.628Z",
+  "ultimaAlteracao": "2026-09-16T13:33:02.713Z",
   "especies": [
     "Ankylo",
     "Archelon",
@@ -263,7 +263,21 @@
       "oxigenio": 70,
       "comida": 76,
       "nivel": 449
+    },
+    {
+      "id": "80ea69c8-f62d-4a7f-9380-4d6a03bf090c",
+      "especie": "Therizino",
+      "nome": "theriz-w1-m",
+      "genero": "Macho",
+      "vida": 65,
+      "dano": 63,
+      "estamina": 78,
+      "velocidade": 0,
+      "peso": 57,
+      "oxigenio": 77,
+      "comida": 93,
+      "nivel": 434
     }
   ],
-  "especieFiltro": "Ankylo"
+  "especieFiltro": "Therizino"
 }
