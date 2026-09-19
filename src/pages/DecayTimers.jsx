@@ -451,7 +451,7 @@ export default function DecayTimers() {
               onClick={levarProGithub}
               title="Salvar decayTimers.json lá no GitHub"
             >
-              😺
+              📤
             </button>
           </div>
           <p style={{ fontSize: "0.8rem", color: "gray" }}>

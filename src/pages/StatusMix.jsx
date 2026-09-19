@@ -304,6 +304,10 @@ export default function StatusMix() {
     }
   };
 
+  function levarProGithub() {
+    window.open("https://github.com/rafaellindemann/blackBoxToolBox/edit/main/src/data/statusMix.json", "_blank");
+  }
+
   const aplicarDadosImportados = (dados, origem = "JSON") => {
     if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) {
       throw new Error("Formato inválido");
@@ -759,6 +763,14 @@ export default function StatusMix() {
               title="Carregar o statusMix.json publicado no GitHub"
             >
               ☁️ Carregar do GitHub
+            </button>
+            <button
+              type="button"
+              className="btn-secundario"
+              onClick={levarProGithub}
+              title="Salvar o statusMix.json lá no GitHub"
+            >
+              📤 Salvar do GitHub
             </button>
           </div>
         </div>
