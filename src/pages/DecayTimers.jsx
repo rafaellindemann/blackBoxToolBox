@@ -193,6 +193,10 @@ export default function DecayTimers() {
     localStorage.setItem(LAST_EXPORT_KEY, new Date().toISOString());
   };
 
+  function levarProGithub() {
+    window.open("https://github.com/rafaellindemann/blackBoxToolBox/edit/main/src/data/decayTimers.json", "_blank");
+  }
+
   const colarJson = async () => {
     try {
       const texto = await navigator.clipboard.readText();
@@ -369,59 +373,7 @@ export default function DecayTimers() {
         </div>
       </section>
 
-      {/* Import / Export + Filtros */}
-      <section className="ferramenta" style={{ display: "flex", gap: "2rem", flexWrap: "wrap"}}>
-        <div>
-          <h2>Importar / Exportar</h2>
-          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
-            <button
-              onClick={exportar}
-              title="Exportar JSON para arquivo"
-              className={dadosAlterados ? "pulsar" : ""}
-            >
-              💾
-            </button>
-            <label className="btn-config" title="Importar JSON de arquivo">
-              📂
-              <input type="file" onChange={importar} style={{ display: "none" }} />
-            </label>
-            <button
-              onClick={copiarJson}
-              title="Copiar JSON para área de transferência"
-              className={dadosAlterados ? "pulsar" : ""}
-            >
-              📋
-            </button>
-            <button onClick={colarJson} title="Colar JSON da área de transferência">📥</button>
-            <button
-              onClick={carregarDoGithub}
-              title="Carregar decayTimers.json do GitHub"
-            >
-              ☁️
-            </button>
-          </div>
-          <p style={{ fontSize: "0.8rem", color: "gray" }}>
-            Última importação: {ultimaImportacao?.toLocaleString() || "-"}
-          </p>
-        </div>
 
-        <div>
-          <h2>Filtros</h2>
-          <div className="item-grid">
-            {mapasUnicos.map((m) => (
-              <button
-                key={m}
-                onClick={() => toggleMapa(m)}
-                style={{ textDecoration: filtros[m] === false ? "line-through" : "none" }}
-              >
-                {m}
-              </button>
-            ))}
-            <button onClick={mostrarTodos}>Mostrar Todos</button>
-            <button onClick={esconderTodos}>Ocultar Todos</button>
-          </div>
-        </div>
-      </section>
 
       {/* Tabela de Bases */}
       {basesOrdenadas.length > 0 && (
@@ -464,6 +416,66 @@ export default function DecayTimers() {
           </table>
         </section>
       )}
+
+            {/* Import / Export + Filtros */}
+      <section className="ferramenta" style={{ display: "flex", gap: "2rem", flexWrap: "wrap"}}>
+        <div className="div-importacoes">
+          <h2>Importar / Exportar</h2>
+          <div style={{ display: "flex", gap: "1rem", alignItems: "center" }}>
+            <button
+              onClick={exportar}
+              title="Exportar JSON para arquivo"
+              className={dadosAlterados ? "pulsar" : ""}
+            >
+              💾
+            </button>
+            <label className="btn-config" title="Importar JSON de arquivo">
+              📂
+              <input type="file" onChange={importar} style={{ display: "none" }} />
+            </label>
+            <button
+              onClick={copiarJson}
+              title="Copiar JSON para área de transferência"
+              className={dadosAlterados ? "pulsar" : ""}
+            >
+              📋
+            </button>
+            <button onClick={colarJson} title="Colar JSON da área de transferência">📥</button>
+            <button
+              onClick={carregarDoGithub}
+              title="Carregar decayTimers.json do GitHub"
+            >
+              ☁️
+            </button>
+            <button
+              onClick={levarProGithub}
+              title="Salvar decayTimers.json lá no GitHub"
+            >
+              😺
+            </button>
+          </div>
+          <p style={{ fontSize: "0.8rem", color: "gray" }}>
+            Última importação: {ultimaImportacao?.toLocaleString() || "-"}
+          </p>
+        </div>
+
+        <div className="div-filtros">
+          <h2>Filtros</h2>
+          <div className="item-grid">
+            {mapasUnicos.map((m) => (
+              <button
+                key={m}
+                onClick={() => toggleMapa(m)}
+                style={{ textDecoration: filtros[m] === false ? "line-through" : "none" }}
+              >
+                {m}
+              </button>
+            ))}
+            <button onClick={mostrarTodos}>Mostrar Todos</button>
+            <button onClick={esconderTodos}>Ocultar Todos</button>
+          </div>
+        </div>
+      </section>
 
       {/* Modal */}
       {modalId !== null && (
