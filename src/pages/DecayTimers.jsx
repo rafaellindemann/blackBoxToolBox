@@ -373,7 +373,24 @@ export default function DecayTimers() {
         </div>
       </section>
 
-
+      <section className="ferramenta">
+                <div className="div-filtros">
+          <h2>Filtros</h2>
+          <div className="item-grid">
+            {mapasUnicos.map((m) => (
+              <button
+                key={m}
+                onClick={() => toggleMapa(m)}
+                style={{ textDecoration: filtros[m] === false ? "line-through" : "none" }}
+              >
+                {m}
+              </button>
+            ))}
+            <button onClick={mostrarTodos}>Mostrar Todos</button>
+            <button onClick={esconderTodos}>Ocultar Todos</button>
+          </div>
+        </div>
+      </section>
 
       {/* Tabela de Bases */}
       {basesOrdenadas.length > 0 && (
@@ -459,22 +476,7 @@ export default function DecayTimers() {
           </p>
         </div>
 
-        <div className="div-filtros">
-          <h2>Filtros</h2>
-          <div className="item-grid">
-            {mapasUnicos.map((m) => (
-              <button
-                key={m}
-                onClick={() => toggleMapa(m)}
-                style={{ textDecoration: filtros[m] === false ? "line-through" : "none" }}
-              >
-                {m}
-              </button>
-            ))}
-            <button onClick={mostrarTodos}>Mostrar Todos</button>
-            <button onClick={esconderTodos}>Ocultar Todos</button>
-          </div>
-        </div>
+
       </section>
 
       {/* Modal */}
