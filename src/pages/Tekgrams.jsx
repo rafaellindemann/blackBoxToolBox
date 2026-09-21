@@ -28,6 +28,7 @@ export default function Tekgrams() {
   const [tekgramSelecionado, setTekgramSelecionado] = useState(null);
   const [filtroBoss, setFiltroBoss] = useState("");
   const [filtroTekgram, setFiltroTekgram] = useState("");
+  const [bossesCompactados, setBossesCompactados] = useState(() => new Set());
   const tableWrapRef = useRef(null);
 
   const bossesOrdenados = useMemo(() => {
@@ -60,14 +61,22 @@ export default function Tekgrams() {
   }, [bossSelecionado, tekgramSelecionado, filtroBoss]);
 
   const colunasOrdenadas = useMemo(
-    () =>
-      bossesOrdenados.flatMap((boss) =>
-        boss.columns
-          .map((columnId) => TEKGRAM_COLUMNS.find((col) => col.id === columnId))
-          .filter(Boolean)
-      ),
-    [bossesOrdenados]
+    () => bossesOrdenados.flatMap((boss) => {
+      const cols = boss.columns.map((id) => TEKGRAM_COLUMNS.find((c) => c.id === id)).filter(Boolean);
+      if (!bossesCompactados.has(boss.id)) return cols;
+      const alpha = cols.find((c) => c.difficulty === "A");
+      return [alpha || cols[cols.length - 1]].filter(Boolean);
+    }),
+    [bossesOrdenados, bossesCompactados]
   );
+
+  const alternarCompactacaoBoss = (bossId) => {
+    setBossesCompactados((atuais) => {
+      const proximos = new Set(atuais);
+      proximos.has(bossId) ? proximos.delete(bossId) : proximos.add(bossId);
+      return proximos;
+    });
+  };
 
   const tekgramsOrdenados = useMemo(() => {
     const filtro = normalizarBusca(filtroTekgram);
@@ -193,23 +202,35 @@ export default function Tekgrams() {
                 <th className="sticky-name tekgram-label-head" rowSpan="2">
                   Tekgram
                 </th>
-                {bossesOrdenados.map((boss) => (
-                  <th
-                    key={boss.id}
-                    colSpan={boss.columns.length}
-                    className={`boss-head ${
-                      bossSelecionado === boss.id ? "selected" : ""
-                    } ${bossTemTekgramSelecionado(boss) ? "matches-row" : ""}`}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => selecionarBoss(boss.id)}
-                      title={`Trazer ${boss.name} para a primeira coluna e priorizar seus Tekgrams`}
+                {bossesOrdenados.map((boss) => {
+                  const compactado = bossesCompactados.has(boss.id);
+                  return (
+                    <th
+                      key={boss.id}
+                      colSpan={compactado ? 1 : boss.columns.length}
+                      className={`boss-head ${compactado ? "compactado" : ""} ${
+                        bossSelecionado === boss.id ? "selected" : ""
+                      } ${bossTemTekgramSelecionado(boss) ? "matches-row" : ""}`}
                     >
-                      {boss.name}
-                    </button>
-                  </th>
-                ))}
+                      {compactado ? (
+                        <button type="button" className="boss-expand-btn"
+                          onClick={() => alternarCompactacaoBoss(boss.id)}
+                          title={`Expandir ${boss.name}`} aria-label={`Expandir ${boss.name}`}>+</button>
+                      ) : (
+                        <div className="boss-head-content">
+                          <button type="button" className="boss-name-btn"
+                            onClick={() => selecionarBoss(boss.id)}
+                            title={`Trazer ${boss.name} para a primeira coluna e priorizar seus Tekgrams`}>
+                            {boss.name}
+                          </button>
+                          <button type="button" className="boss-collapse-btn"
+                            onClick={() => alternarCompactacaoBoss(boss.id)}
+                            title={`Compactar ${boss.name}`} aria-label={`Compactar ${boss.name}`}>−</button>
+                        </div>
+                      )}
+                    </th>
+                  );
+                })}
               </tr>
 
               <tr className="difficulty-row">
@@ -280,7 +301,8 @@ export default function Tekgrams() {
 
       <p className="tekgrams-note">
         Dificuldades maiores de um mesmo boss também concedem os Tekgrams das
-        dificuldades anteriores.
+        dificuldades anteriores. Use − para compactar um boss em uma única coluna
+        Alpha e + para expandi-lo novamente.
       </p>
     </div>
   );
