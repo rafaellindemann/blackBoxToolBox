@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./ConversorTek.css";
+import "./DecayTimers.css";
 import { v4 as uuidv4 } from "uuid";
 
 const DECAY_TIMES = {
@@ -15,6 +15,7 @@ const DECAY_TIMES = {
 const STORAGE_KEY = "decayBases";
 const LAST_EXPORT_KEY = "decayBases_lastExport";
 const LAST_IMPORT_KEY = "decayBases_lastImport";
+const VERSION_KEY = "decayBases_version";
 const GITHUB_DECAY_URL =
   "https://raw.githubusercontent.com/rafaellindemann/blackBoxToolBox/main/src/data/decayTimers.json";
 
@@ -32,12 +33,16 @@ export default function DecayTimers() {
   const [filtros, setFiltros] = useState({});
   const [ultimaImportacao, setUltimaImportacao] = useState(null);
   const [jsonOriginal, setJsonOriginal] = useState(null);
+  const [versaoSave, setVersaoSave] = useState(0);
+  const [confirmacaoImportacao, setConfirmacaoImportacao] = useState(null);
 
   useEffect(() => {
     const salvas = JSON.parse(localStorage.getItem(STORAGE_KEY));
     const importTime = localStorage.getItem(LAST_IMPORT_KEY);
+    const versaoSalva = Number(localStorage.getItem(VERSION_KEY));
     if (salvas) setBases(salvas);
     if (importTime) setUltimaImportacao(new Date(importTime));
+    if (Number.isInteger(versaoSalva) && versaoSalva >= 0) setVersaoSave(versaoSalva);
     setJsonOriginal(JSON.stringify(salvas));
   }, []);
 
@@ -67,31 +72,39 @@ export default function DecayTimers() {
 
   const aplicarImportacao = (json, origem = "JSON") => {
     const array = Array.isArray(json) ? json : json.bases;
-    if (!Array.isArray(array)) {
-      throw new Error("Formato inválido");
-    }
+    if (!Array.isArray(array)) throw new Error("Formato inválido");
 
     const corrigido = normalizarBasesImportadas(array);
+    const versaoImportada =
+      !Array.isArray(json) && Number.isInteger(json.versao) && json.versao >= 0
+        ? json.versao
+        : 0;
 
-    if (
-      !confirm(
-        `Carregar ${corrigido.length} base(s) de ${origem}? Isso substituirá os dados atuais.`
-      )
-    ) {
-      return false;
-    }
+    setConfirmacaoImportacao({
+      origem,
+      bases: corrigido,
+      versao: versaoImportada,
+      exportedAt:
+        !Array.isArray(json) && typeof json.exportedAt === "string"
+          ? json.exportedAt
+          : null,
+    });
+    return true;
+  };
 
-    setBases(corrigido);
+  const confirmarImportacao = () => {
+    if (!confirmacaoImportacao) return;
 
-    const dataImportacao =
-      !Array.isArray(json) && typeof json.exportedAt === "string"
-        ? new Date(json.exportedAt)
-        : new Date();
+    const { bases: novasBases, versao, exportedAt } = confirmacaoImportacao;
+    const dataImportacao = exportedAt ? new Date(exportedAt) : new Date();
 
+    setBases(novasBases);
+    setVersaoSave(versao);
+    localStorage.setItem(VERSION_KEY, String(versao));
     setUltimaImportacao(dataImportacao);
     localStorage.setItem(LAST_IMPORT_KEY, dataImportacao.toISOString());
-    setJsonOriginal(JSON.stringify(corrigido));
-    return true;
+    setJsonOriginal(JSON.stringify(novasBases));
+    setConfirmacaoImportacao(null);
   };
 
   const addBase = () => {
@@ -126,7 +139,9 @@ export default function DecayTimers() {
   };
 
   const exportar = () => {
+    const novaVersao = versaoSave + 1;
     const data = {
+      versao: novaVersao,
       exportedAt: new Date().toISOString(),
       bases,
     };
@@ -138,6 +153,8 @@ export default function DecayTimers() {
     link.href = url;
     link.download = "bases-decay.json";
     link.click();
+    setVersaoSave(novaVersao);
+    localStorage.setItem(VERSION_KEY, String(novaVersao));
     setJsonOriginal(JSON.stringify(bases));
     localStorage.setItem(LAST_EXPORT_KEY, new Date().toISOString());
   };
@@ -171,31 +188,60 @@ export default function DecayTimers() {
       }
 
       const json = await resposta.json();
-      const importado = aplicarImportacao(json, "GitHub");
-
-      if (importado) {
-        alert("Save de decay carregado do GitHub com sucesso!");
-      }
+      aplicarImportacao(json, "GitHub");
     } catch (erro) {
       console.error("Erro ao carregar decayTimers.json do GitHub:", erro);
       alert("Não foi possível carregar o decayTimers.json do GitHub.");
     }
   };
 
-  const copiarJson = () => {
-    const data = {
-      exportedAt: new Date().toISOString(),
-      bases,
-    };
-    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
-    alert("JSON copiado para a área de transferência!");
-    setJsonOriginal(JSON.stringify(bases));
-    localStorage.setItem(LAST_EXPORT_KEY, new Date().toISOString());
+  const copiarJson = async () => {
+    try {
+      const novaVersao = versaoSave + 1;
+      const data = {
+        versao: novaVersao,
+        exportedAt: new Date().toISOString(),
+        bases,
+      };
+
+      await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+      setVersaoSave(novaVersao);
+      localStorage.setItem(VERSION_KEY, String(novaVersao));
+      setJsonOriginal(JSON.stringify(bases));
+      localStorage.setItem(LAST_EXPORT_KEY, new Date().toISOString());
+      alert(`JSON v${novaVersao} copiado para a área de transferência!`);
+    } catch {
+      alert("Não foi possível acessar a área de transferência.");
+    }
   };
 
-  function levarProGithub() {
-    window.open("https://github.com/rafaellindemann/blackBoxToolBox/edit/main/src/data/decayTimers.json", "_blank");
-  }
+  const levarProGithub = async () => {
+    try {
+      const novaVersao = versaoSave + 1;
+      const agora = new Date().toISOString();
+      const data = {
+        versao: novaVersao,
+        exportedAt: agora,
+        bases,
+      };
+
+      await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+
+      setVersaoSave(novaVersao);
+      localStorage.setItem(VERSION_KEY, String(novaVersao));
+      setJsonOriginal(JSON.stringify(bases));
+      localStorage.setItem(LAST_EXPORT_KEY, agora);
+
+      window.open(
+        "https://github.com/rafaellindemann/blackBoxToolBox/edit/main/src/data/decayTimers.json",
+        "_blank"
+      );
+    } catch {
+      alert(
+        "Não foi possível copiar o JSON para a área de transferência. O GitHub não foi aberto para evitar salvar dados desatualizados."
+      );
+    }
+  };
 
   const colarJson = async () => {
     try {
@@ -268,7 +314,10 @@ export default function DecayTimers() {
   };
 
   const toggleMapa = (map) => {
-    setFiltros((prev) => ({ ...prev, [map]: !prev[map] }));
+    setFiltros((prev) => ({
+      ...prev,
+      [map]: !(prev[map] ?? true),
+    }));
   };
 
   const mostrarTodos = () => {
@@ -381,7 +430,9 @@ export default function DecayTimers() {
               <button
                 key={m}
                 onClick={() => toggleMapa(m)}
-                style={{ textDecoration: filtros[m] === false ? "line-through" : "none" }}
+                className={filtros[m] === false ? "filtro-mapa-inativo" : "filtro-mapa-ativo"}
+                aria-pressed={filtros[m] !== false}
+                title={filtros[m] === false ? `Mostrar mapa ${m}` : `Ocultar mapa ${m}`}
               >
                 {m}
               </button>
@@ -471,13 +522,62 @@ export default function DecayTimers() {
               📤
             </button>
           </div>
-          <p style={{ fontSize: "0.8rem", color: "gray" }}>
-            Última importação: {ultimaImportacao?.toLocaleString() || "-"}
-          </p>
+          <div className="decay-save-info">
+            <div>
+              <span>Última importação</span>
+              <strong>{ultimaImportacao?.toLocaleString() || "—"}</strong>
+            </div>
+            <div>
+              <span>Versão</span>
+              <strong>v{versaoSave}</strong>
+            </div>
+          </div>
         </div>
 
 
       </section>
+
+      {confirmacaoImportacao && (
+        <div
+          className="modal-config"
+          onMouseDown={() => setConfirmacaoImportacao(null)}
+        >
+          <div
+            className="modal-content decay-confirm-modal"
+            onMouseDown={(e) => e.stopPropagation()}
+          >
+            <span className="decay-modal-eyebrow">IMPORTAR SAVE</span>
+            <h2>Carregar dados do {confirmacaoImportacao.origem}?</h2>
+            <p>
+              Os dados atuais serão substituídos pelos dados encontrados neste save.
+            </p>
+
+            <div className="decay-import-summary">
+              <div>
+                <span>Bases</span>
+                <strong>{confirmacaoImportacao.bases.length}</strong>
+              </div>
+              <div>
+                <span>Versão</span>
+                <strong>v{confirmacaoImportacao.versao}</strong>
+              </div>
+              <div>
+                <span>Origem</span>
+                <strong>{confirmacaoImportacao.origem}</strong>
+              </div>
+            </div>
+
+            <div className="decay-modal-actions">
+              <button onClick={() => setConfirmacaoImportacao(null)}>
+                Cancelar
+              </button>
+              <button className="decay-btn-primary" onClick={confirmarImportacao}>
+                Carregar dados
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Modal */}
       {modalId !== null && (
