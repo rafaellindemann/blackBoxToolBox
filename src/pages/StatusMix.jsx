@@ -56,6 +56,7 @@ export default function StatusMix() {
   const [dataSaveCarregado, setDataSaveCarregado] = useState(null);
   const [dataUltimaAlteracao, setDataUltimaAlteracao] = useState(null);
   const [carregamentoInicialConcluido, setCarregamentoInicialConcluido] = useState(false);
+  const [confirmacaoImportacao, setConfirmacaoImportacao] = useState(null);
 
   useEffect(() => {
     try {
@@ -309,74 +310,31 @@ export default function StatusMix() {
   }
 
   const aplicarDadosImportados = (dados, origem = "JSON") => {
-    if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) {
-      throw new Error("Formato inválido");
-    }
-
-    const especiesImportadas = dados.especies
-      .filter((especie) => typeof especie === "string" && especie.trim())
-      .map((especie) => especie.trim());
-
+    if (!dados || !Array.isArray(dados.especies) || !Array.isArray(dados.dinos)) throw new Error("Formato inválido");
+    const especiesImportadas = dados.especies.filter((e) => typeof e === "string" && e.trim()).map((e) => e.trim());
     const dinosImportados = dados.dinos.map((dino) => {
-      if (!dino || typeof dino !== "object" || typeof dino.especie !== "string" || typeof dino.nome !== "string") {
-        throw new Error("Dino inválido");
-      }
-
-      const stats = STATUS.reduce((acc, { key }) => {
-        const valor = normalizarNumero(dino[key]);
-        if (valor === null) throw new Error(`Status inválido: ${key}`);
-        acc[key] = valor;
-        return acc;
-      }, {});
-
-      return {
-        ...dino,
-        id: dino.id || uuidv4(),
-        especie: dino.especie.trim(),
-        nome: dino.nome.trim(),
-        genero: dino.genero === "Fêmea" ? "Fêmea" : "Macho",
-        ...stats,
-        nivel: calcularNivel(stats),
-      };
+      if (!dino || typeof dino !== "object" || typeof dino.especie !== "string" || typeof dino.nome !== "string") throw new Error("Dino inválido");
+      const stats = STATUS.reduce((acc, { key }) => { const valor = normalizarNumero(dino[key]); if (valor === null) throw new Error(`Status inválido: ${key}`); acc[key] = valor; return acc; }, {});
+      return { ...dino, id: dino.id || uuidv4(), especie: dino.especie.trim(), nome: dino.nome.trim(), genero: dino.genero === "Fêmea" ? "Fêmea" : "Macho", ...stats, nivel: calcularNivel(stats) };
     });
-
-    const especiesDosDinos = dinosImportados.map((dino) => dino.especie);
-    const especiesFinais = [...new Set([...especiesImportadas, ...especiesDosDinos])]
-      .sort((a, b) => a.localeCompare(b, "pt-BR"));
-
-    const filtroImportado =
-      typeof dados.especieFiltro === "string" && especiesFinais.includes(dados.especieFiltro)
-        ? dados.especieFiltro
-        : especiesFinais[0] || "";
-
+    const especiesFinais = [...new Set([...especiesImportadas, ...dinosImportados.map((d) => d.especie)])].sort((a,b) => a.localeCompare(b,"pt-BR"));
+    const filtroImportado = typeof dados.especieFiltro === "string" && especiesFinais.includes(dados.especieFiltro) ? dados.especieFiltro : especiesFinais[0] || "";
     const versaoImportada = Number.isInteger(dados.versao) && dados.versao >= 0 ? dados.versao : 0;
-    const dataSaveImportado = typeof dados.exportedAt === "string" ? dados.exportedAt : null;
+    setConfirmacaoImportacao({ origem, especies: especiesFinais, dinos: dinosImportados, especieFiltro: filtroImportado, versao: versaoImportada, exportedAt: typeof dados.exportedAt === "string" ? dados.exportedAt : null });
+    return true;
+  };
 
-    if (!confirm(`Carregar ${dinosImportados.length} dino(s) e ${especiesFinais.length} espécie(s) de ${origem}? Isso substituirá os dados atuais do Status Mix.`)) {
-      return false;
-    }
-
-    setEspecies(especiesFinais);
-    setDinos(dinosImportados);
-    setEspecieFiltro(filtroImportado);
-    setForm({ ...FORM_VAZIO, especie: filtroImportado });
-    setEditandoId(null);
-    setVersaoSave(versaoImportada);
-    setDataSaveCarregado(dataSaveImportado);
-    setDataUltimaAlteracao(null);
-
-    return { versaoImportada };
+  const confirmarImportacao = () => {
+    if (!confirmacaoImportacao) return;
+    const { especies: ei, dinos: di, especieFiltro: fi, versao, exportedAt } = confirmacaoImportacao;
+    setEspecies(ei); setDinos(di); setEspecieFiltro(fi); setForm({ ...FORM_VAZIO, especie: fi }); setEditandoId(null); setVersaoSave(versao); setDataSaveCarregado(exportedAt); setDataUltimaAlteracao(null); setConfirmacaoImportacao(null);
   };
 
   const importarJsonClipboard = async () => {
     try {
       const texto = await navigator.clipboard.readText();
       const dados = JSON.parse(texto);
-      const resultado = aplicarDadosImportados(dados, "área de transferência");
-
-      if (resultado) {
-        alert(`Dados importados com sucesso!${resultado.versaoImportada ? ` Versão ${resultado.versaoImportada}.` : ""}`);
-      }
+      aplicarDadosImportados(dados, "área de transferência");
     } catch {
       alert("Não foi possível importar. A área de transferência não contém um JSON válido do Status Mix.");
     }
@@ -388,11 +346,7 @@ export default function StatusMix() {
       if (!resposta.ok) throw new Error(`GitHub respondeu com status ${resposta.status}`);
 
       const dados = await resposta.json();
-      const resultado = aplicarDadosImportados(dados, "GitHub");
-
-      if (resultado) {
-        alert(`Save do GitHub carregado com sucesso!${resultado.versaoImportada ? ` Versão ${resultado.versaoImportada}.` : ""}`);
-      }
+      aplicarDadosImportados(dados, "GitHub");
     } catch (erro) {
       console.error("Erro ao carregar save do GitHub:", erro);
       alert("Não foi possível carregar o statusMix.json do GitHub.");
@@ -692,6 +646,26 @@ export default function StatusMix() {
           <h2>Crie sua primeira espécie</h2>
           <p>Use o botão + no cadastro para iniciar sua coleção.</p>
         </section>
+      )}
+
+      {confirmacaoImportacao && (
+        <div className="statusmix-modal-backdrop" onMouseDown={() => setConfirmacaoImportacao(null)}>
+          <div className="statusmix-modal statusmix-import-modal" onMouseDown={(e) => e.stopPropagation()}>
+            <span className="statusmix-modal-eyebrow">IMPORTAR SAVE</span>
+            <h2>Carregar dados do {confirmacaoImportacao.origem}?</h2>
+            <p>Os dados atuais do Status Mix serão substituídos pelos dados deste save.</p>
+            <div className="statusmix-import-summary">
+              <div><span>Dinos</span><strong>{confirmacaoImportacao.dinos.length}</strong></div>
+              <div><span>Espécies</span><strong>{confirmacaoImportacao.especies.length}</strong></div>
+              <div><span>Versão</span><strong>v{confirmacaoImportacao.versao}</strong></div>
+              <div><span>Origem</span><strong>{confirmacaoImportacao.origem}</strong></div>
+            </div>
+            <div className="modal-actions">
+              <button className="btn-secundario" onClick={() => setConfirmacaoImportacao(null)}>Cancelar</button>
+              <button className="btn-principal" onClick={confirmarImportacao}>Carregar dados</button>
+            </div>
+          </div>
+        </div>
       )}
 
       {modalEspecie && (
