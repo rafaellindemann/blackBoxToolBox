@@ -1,6 +1,6 @@
 {
-  "versao": 1,
-  "exportedAt": "2026-09-21T19:48:21.542Z",
+  "versao": 2,
+  "exportedAt": "2026-09-29T04:10:01.170Z",
   "bases": [
     {
       "id": "1896167f-fed0-4796-931a-c364a1b29474",
@@ -40,7 +40,7 @@
       "material": "Metal",
       "diasPersonalizados": null,
       "map": "rag",
-      "ultimaVisita": "2026-09-14T23:46:20.270Z"
+      "ultimaVisita": "2026-09-29T04:04:42.698Z"
     },
     {
       "id": "5f74a199-18e6-4836-90b0-8b546f7f6be7",
@@ -48,7 +48,7 @@
       "material": "Metal",
       "diasPersonalizados": null,
       "map": "SE",
-      "ultimaVisita": "2026-09-14T23:47:27.043Z"
+      "ultimaVisita": "2026-09-29T04:09:51.153Z"
     },
     {
       "id": "70da1c2e-24a8-40e7-b18d-2184216174b9",
